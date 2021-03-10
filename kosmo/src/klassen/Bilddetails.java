@@ -138,7 +138,7 @@ public class Bilddetails implements Serializable {
 			}
 			f.put(y, l);
 		}
-		mapInDatei(f, new File("getBWFarben.txt"));
+		//mapInDatei(f, new File("getBWFarben.txt"));
 		return f;
 
 	}
