@@ -1,0 +1,94 @@
+10.03.2021 - V0.231_HOTFIX_Beta
+Fixes:
+- Fileformate erweitert. Folgendes ist nun erlaubt:
+  "jpg", "png", "gif", "bmp"
+- 
+
+
+______________________________________________________
+
+09.03.2021 - V0.23_HOTFIX_Beta
+Fixes:
+- Änderunge der Keys in der Bildmap
+
+
+______________________________________________________
+
+08.03.2021 - V0.23_Beta
+Fixes:
+- Logger eingebaut für Printing-Prozess
+
+
+______________________________________________________
+
+05.03.2021 - V0.22_Beta
+Fixes:
+- Flackern auf ein Minimum reduziert. 
+- Autosafe beim beenden. (für zukünftige Funktionen)
+
+
+______________________________________________________
+
+05.03.2021 - V0.21_Beta
+Fixes:
+- Wenn nach dem kalibrieren manuell verfahren wird, ist der 
+  Kalibrate-Button wieder aktiv. 
+- Wenn im Pause Modus auf "Automatik" gedrückt wird, startet
+  der Druckprozess. Es kann aber auch im manuellen Modus
+  auf Resume geklickt werden. Dann wird automatisch der 
+  Button Automatik umgestellt und die 4500 gesendet.
+- Öffnen Button unter Start entfernt
+
+
+______________________________________________________
+
+04.03.2021 - V0.2_Beta
+Fixes:
+- Wenn nur 1 ComPort vorhanden ist, wird dieser automatisch
+  gewählt. Über das Menü, kommt aber trotzdem noch das Auswahl-
+  Fenster.
+- Infos über Arduino nach Verbindung trennen wird jetzt geleert
+- Calibrate Button beim Schalten auf „Manuel“ im Druckprozess 
+  wieder aktiv
+- Umstrukturierung des kompletten Print-Prozess
+- Printbutton auf den korrekten Status abgestimmt (resume, pause)
+- Scrollbar bei den Releasnotes eingefügt
+- senden der Zahlenreihe fürs Drucken geändert. Jetzt wird alles
+  zusammen geschickt und nicht jedes Zeichen einzeln.
+  Button in Einstellungen hinterlegt falls Fehler
+
+New Features:
+- Pausieren und Fortsetzen des Druckprozess
+- neuer Button "Druckauftrag abbrechen" hinzugefügt
+  hier wird der komplette Druckauftrag gelöscht.
+- Speichern und Laden der Einstellungen 
+- leere Zeilen werden zusammengefasst versendet
+
+
+______________________________________________________
+
+21.02.2021 - V0.1_Beta
+Fixes:
+- Überarbeitung der Kommandos. Werte angepasst und nun wird 
+  ein @ als Vorzeichen und eine # als Abschlusszeichen gesendet.
+- Bewegungsbuttons angepasst. Beim Drücken wird 1 mal das 
+  Kommando zum Fahren gesendet und beim Loslassen das 
+  Stopp-Kommando
+- Toggle Button Auto/Manuel gefixt. Hier wurde bei 
+  deaktivieren des Buttons nicht der andere Wert aktiviert
+- Config wird nun im Automodus ausgeblendet
+- Anpassung des Calibrate buttons. 
+  Referenzwert -> Kalibieren -> Kalibriert (danach deaktiviert) 
+  Kann durch trennen und neu verbinden wieder aktiviert werden. 
+  Ggf muss man hier noch eine andere Lösung finden?!?)
+- Abhängigkeiten der Buttons optimiert (über den GuiUpdater)
+- neue Symbole für Buttons hinzugefügt
+- Druckbereich überarbeitet und den zweiten Druckbutton entfernt.
+
+New Features:
+- Einstellungen -> „Kommandos festlegen“ -> Möglichkeiten 
+  Konfigurationskommandos selbst zu erstellen. z.B. wenn man 
+  die Geschwindigkeit anpassen möchte...
+- Releasnotes hinzugefügt
+- Kontaktbutton hinzugefügt -> Email mailto/ Instagram
+- Button für „Farbabgabe“ hinzugefügt
