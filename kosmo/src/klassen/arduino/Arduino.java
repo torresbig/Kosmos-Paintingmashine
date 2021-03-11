@@ -1,43 +1,41 @@
 package klassen.arduino;
 
 import java.awt.Dimension;
+import java.io.BufferedReader;
 import java.io.Externalizable;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.PrintWriter;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import com.fazecast.jSerialComm.*;
-
 import enu.Calibrate;
 import enu.Commands;
 import enu.ConnectionState;
 import javax.swing.DefaultListModel;
-
 import gui.MainWindow;
 import gui.arduino.AlertBox;
 import klassen.ArduinoInfosListModel;
 import klassen.EinstellungsParameter;
-import klassen.Helper;
-import main.Datenpool;
-import main.PaintingMaschine;
 
 public class Arduino implements Externalizable {
 	private static final long serialVersionUID = 1L;
 	private MainWindow mainFrame;
 	private SerialPort comPort;
 	private String portDescription;
-	private int baud_rate;
 	public ConnectionState conState;
 	private Calibrate calibrate;
 	private ReadWriteData readWrite = new ReadWriteData(new DefaultListModel<>());
 	private ArduinoInfosListModel arduinoInfos;
 	private HashMap<String, EinstellungsParameter> einstellungen;
-	
-	public Arduino( ) {
+
+	private static final int TIME_OUT = 2000;
+	private static final int DATA_RATE = 9600;
+
+	public Arduino() {
 		// Construktor fürs speichern.
 		this.conState = ConnectionState.DISCONNECTED;
 		this.calibrate = Calibrate.UNBESTIMMT;
@@ -51,21 +49,11 @@ public class Arduino implements Externalizable {
 	}
 
 	public Arduino(MainWindow mainFrame, String portDescription) {
-		// make sure to set baud rate after
-		this.portDescription = portDescription;
-		this.conState = ConnectionState.DISCONNECTED;
-		this.calibrate = Calibrate.UNBESTIMMT;
-		this.comPort = SerialPort.getCommPort(this.portDescription);
-		this.mainFrame = mainFrame;
-	}
-
-	public Arduino(MainWindow mainFrame, String portDescription, int baud_rate) {
 		// preferred constructor
 		this.conState = ConnectionState.DISCONNECTED;
 		this.portDescription = portDescription;
 		createComPortFromDescription();
-		this.baud_rate = baud_rate;
-		comPort.setBaudRate(this.baud_rate);
+		comPort.setBaudRate(DATA_RATE);
 		this.calibrate = Calibrate.UNBESTIMMT;
 		this.mainFrame = mainFrame;
 	}
@@ -174,11 +162,6 @@ public class Arduino implements Externalizable {
 		comPort = SerialPort.getCommPort(this.portDescription);
 	}
 
-	public void setBaudRate(int baud_rate) {
-		this.baud_rate = baud_rate;
-		comPort.setBaudRate(this.baud_rate);
-	}
-
 	public String getPortDescription() {
 		return portDescription;
 	}
@@ -197,51 +180,60 @@ public class Arduino implements Externalizable {
 
 	public String serialRead() {
 		// will be an infinite loop if incoming data is not bound
-		comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
-		String out = "";
-		Scanner in = new Scanner(comPort.getInputStream());
-		
+		String out = null;
 		try {
-			while (in.hasNext()) {
-				out += (in.next() + "\n");
-				mainFrame.dataPool.logger.info("Scanner IN.next() - "+in.next()+"|");
+			comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, TIME_OUT, TIME_OUT);
+
+			BufferedReader input = new BufferedReader(new InputStreamReader(comPort.getInputStream()));
+			if (input.ready()) {
+				out = input.readLine();   //TODO: input.lines().map(line -> line + "\n").collect(Collectors.joining());
+				mainFrame.dataPool.logger.info("SerialRead Output ist: " + out);
 			}
-			in.close();
+			input.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("SCANNER ERROR");
-			mainFrame.dataPool.logger.info("Arudino - SerialRead Exception " +e);
+			System.err.println(e.toString());
+			System.err.println("SCANNER ERROR");
+			mainFrame.dataPool.logger.info("Arudino - SerialRead Exception " + e.toString());
 
 		}
-		if (out != "") {
-			setArduinoCommunication("Serial read >> " + out +"|");
+		if (out != "" && out != null) {
+			setArduinoCommunication("Serial read >> " + out);
 
 		}
 		return out;
 	}
-	
+
 	public boolean serialReadPrintingProzess() {
-		String[] as = serialRead().split("\n");
-		int i = 0;
 		boolean result = false;
-		for(String x : as) {
-			System.out.println("serialRead: |"+x + "| - nach trim: |"+x.trim()+"| -Zeile: "+i);
-			mainFrame.dataPool.logger.info("Arudino - serialReadPrintingProzess - serialRead: |"+x + "| - nach trim: |"+x.trim()+"| -Zeile: "+i);
-			x.trim();
-			if (x.equals("1")) {
-				result = true;
-			}
-			else {
-				if (x.contains("1")) {
-					System.out.println("WARNUNG CONTAINS GENOMMEN!");
-					mainFrame.dataPool.logger.info("Arudino - serialReadPrintingProzess - WARNUNG CONTAINS GENOMMEN!" );
+		try {
+			String as = serialRead();
+
+			if (as != null) {
+
+				String[] s = as.split("/n");
+				for (String x : s) {
+					x.trim();
+					if (x.equals("1")) {
+						result = true;
+					} else {
+						if (x.contains("1")) {
+							System.out.println("WARNUNG CONTAINS GENOMMEN!");
+							mainFrame.dataPool.logger
+									.info("Arudino - serialReadPrintingProzess - WARNUNG CONTAINS GENOMMEN!");
+							result = true;
+						}
+					}
 				}
+
 			}
-			
-			i++;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(e.toString());
 		}
+
 		return result;
-		
+
 	}
 
 	public String serialRead(int limit) {
@@ -258,7 +250,7 @@ public class Arduino implements Externalizable {
 			in.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			mainFrame.dataPool.logger.info("Arudino - SerialRead Exception " +e.getMessage());
+			mainFrame.dataPool.logger.info("Arudino - SerialRead Exception " + e.getMessage());
 
 		}
 		if (out != "") {
@@ -274,7 +266,7 @@ public class Arduino implements Externalizable {
 			Thread.sleep(5);
 		} catch (Exception e) {
 			e.printStackTrace();
-			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " +e.getMessage());
+			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
 		}
 		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
 		if (s != "") {
@@ -304,7 +296,8 @@ public class Arduino implements Externalizable {
 
 		serialWrite(enumCommands.getStringWert());
 		System.out.println("serialWrite --> " + enumCommands.toString());
-		mainFrame.dataPool.logger.info("SerialWrite: " + enumCommands.toString() + " // serialWrite(Commands enumCommands)");
+		mainFrame.dataPool.logger
+				.info("SerialWrite: " + enumCommands.toString() + " // serialWrite(Commands enumCommands)");
 
 	}
 
@@ -316,7 +309,7 @@ public class Arduino implements Externalizable {
 		try {
 			Thread.sleep(5);
 		} catch (Exception e) {
-			mainFrame.dataPool.logger.info("Arudino - serialWritePictureLine Exception " +e.getMessage());
+			mainFrame.dataPool.logger.info("Arudino - serialWritePictureLine Exception " + e.getMessage());
 			e.getStackTrace();
 
 		}
@@ -334,7 +327,7 @@ public class Arduino implements Externalizable {
 		try {
 			Thread.sleep(5);
 		} catch (Exception e) {
-			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " +e.getMessage());
+			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
 			e.getStackTrace();
 		}
 		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
@@ -361,7 +354,7 @@ public class Arduino implements Externalizable {
 		try {
 			Thread.sleep(5);
 		} catch (Exception e) {
-			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " +e.getMessage());
+			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
 			e.getStackTrace();
 		}
 		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
@@ -376,7 +369,7 @@ public class Arduino implements Externalizable {
 		try {
 			Thread.sleep(5);
 		} catch (Exception e) {
-			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " +e.getMessage());
+			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
 			e.getStackTrace();
 		}
 		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
@@ -386,7 +379,7 @@ public class Arduino implements Externalizable {
 		try {
 			Thread.sleep(delay);
 		} catch (Exception e) {
-			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " +e.getMessage());
+			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
 			e.getStackTrace();
 		}
 	}
@@ -403,7 +396,6 @@ public class Arduino implements Externalizable {
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
 		this.portDescription = ((String) in.readObject());
-		this.baud_rate = ((int) in.readObject());
 		this.einstellungen = ((HashMap<String, EinstellungsParameter>) in.readObject());
 		this.zahlenZusammen = ((Integer) in.readObject());
 	}
@@ -411,7 +403,6 @@ public class Arduino implements Externalizable {
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.writeObject(this.portDescription);
-		out.writeObject(this.baud_rate);
 		out.writeObject(this.einstellungen);
 		out.writeObject(this.zahlenZusammen);
 	}
