@@ -295,14 +295,9 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 
 					if (getPrintingProzess().printingProzess.isPAUSE()) {
 						getPrintingProzess().resume();
-//						tabbedPanels.tglbtnAuto.setSelected(true);
-//						this.getArduino().serialWrite(Commands.MODUS_AUTO);
 						
 					} else if (getPrintingProzess().printingProzess.isRUN()) {
 						getPrintingProzess().pause();
-//						tabbedPanels.tglbtnManuel.setSelected(true);
-//						this.getArduino().serialWrite(Commands.MODUS_MANUELL);
-
 					} else {
 						getPrintingProzess().excecute();
 					}
@@ -325,8 +320,6 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 
 		if (e.getSource() == this.picPrintPanel.btnDruckauftragAbbrechen) {
 			this.getPrintingProzess().cancel();
-//			tabbedPanels.tglbtnManuel.setSelected(true);
-//			this.getArduino().serialWrite(Commands.MODUS_MANUELL);
 			Helper.guiUpdater(this, new ArrayList<GuiComponente>(
 					List.of(GuiComponente.ARDUINOPANEL, GuiComponente.PRINTINGPANEL, GuiComponente.TABBEDPANEL)));
 		}
@@ -407,7 +400,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 
 		if (e.getSource() == this.conDialog.connectButton) {
 			if (!getArduino().isConnected()) {
-				this.dataPool.setArduino(new Arduino(this,conDialog.portList.getSelectedItem().toString(), 9600));
+				this.dataPool.setArduino(new Arduino(this,conDialog.portList.getSelectedItem().toString()));
 				if (this.getArduino().openConnection()) {
 					Helper.guiUpdater(this,
 							new ArrayList<GuiComponente>(List.of(GuiComponente.TABBEDPANEL, GuiComponente.ARDUINOPANEL,
@@ -436,7 +429,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 
 			else {
 				if (Helper.getTheOneComPort() != "false") {
-					this.dataPool.setArduino(new Arduino(this,Helper.getTheOneComPort(), 9600));
+					this.dataPool.setArduino(new Arduino(this,Helper.getTheOneComPort()));
 					if (this.getArduino().openConnection()) {
 						Helper.guiUpdater(this,
 								new ArrayList<GuiComponente>(List.of(GuiComponente.TABBEDPANEL,

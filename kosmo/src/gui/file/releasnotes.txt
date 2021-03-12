@@ -1,15 +1,17 @@
-10.03.2021 - V0.231_HOTFIX_Beta
+11.03.2021 - V0.231_HOTFIX_Beta
 Fixes:
 - Fileformate erweitert. Folgendes ist nun erlaubt:
   "jpg", "png", "gif", "bmp"
-- 
-
+- neue Methode für den SerialRead
+- Mehr Try Catch Blöcke eingebaut
+- Printingprozess umgebaut. Jetzt Loop statt Ende!
 
 ______________________________________________________
 
 09.03.2021 - V0.23_HOTFIX_Beta
 Fixes:
-- Änderunge der Keys in der Bildmap
+- Änderunge der Keys in der Bildmap um fehler im 
+  Printingprozess zu beheben
 
 
 ______________________________________________________

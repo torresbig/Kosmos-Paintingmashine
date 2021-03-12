@@ -13,7 +13,6 @@ import main.Datenpool;
 public class PrintingProzess {
 
 	MainWindow mainFrame;;
-	int currentLine;
 	Map<Integer, List<String>> bildMap;
 	boolean goToNextLine;
 	public enu.PrintingProzess printingProzess;
@@ -22,7 +21,6 @@ public class PrintingProzess {
 
 	public PrintingProzess(MainWindow mainFrame) {
 		this.mainFrame = mainFrame;
-		this.currentLine = 0;
 		this.goToNextLine = false;
 		this.printingProzess = enu.PrintingProzess.IDLE;
 	}
@@ -30,14 +28,11 @@ public class PrintingProzess {
 	public void excecute() {
 		bgpl = new BackgroundPrintLoop(this);
 		bgpl.execute();
+
 	}
 
 	public void resume() {
-		if(bgpl.isDone()== false) {
-			bgpl.cancel(true);
-		}
-		bgpl = new BackgroundPrintLoop(this);
-		bgpl.execute();
+		start();
 		this.mainFrame.tabbedPanels.tglbtnAuto.setSelected(true);
 		this.mainFrame.getArduino().serialWrite(Commands.MODUS_AUTO);
 		Helper.guiUpdater(this.mainFrame, new ArrayList<GuiComponente>(
@@ -60,10 +55,28 @@ public class PrintingProzess {
 		this.mainFrame.getArduino().serialWrite(Commands.MODUS_MANUELL);
 		bgpl.cancel(true);
 		this.bildMap = null;
-		this.currentLine = 0;
 		this.printingProzess = enu.PrintingProzess.IDLE;
 		Helper.guiUpdater(this.mainFrame, new ArrayList<GuiComponente>(
 				List.of(GuiComponente.ARDUINOPANEL, GuiComponente.PRINTINGPANEL, GuiComponente.TABBEDPANEL)));
+	}
+	
+	public void start() {
+		this.mainFrame.getArduino().setArduinoCommunication("Druckvorgang START");
+		this.printingProzess = enu.PrintingProzess.RUN;
+		Helper.guiUpdater(this.mainFrame, new ArrayList<GuiComponente>(
+				List.of(GuiComponente.ARDUINOPANEL, GuiComponente.PRINTINGPANEL, GuiComponente.TABBEDPANEL)));
+		this.mainFrame.dataPool.logger.info("PrintingProzess - Background   //  start() ");
+
+	}
+	
+	public void ende() {
+		this.mainFrame.getArduino().setArduinoCommunication("Druckvorgang ENDE");
+		this.bildMap = null;
+		this.printingProzess = enu.PrintingProzess.IDLE;
+		Helper.guiUpdater(this.mainFrame, new ArrayList<GuiComponente>(
+				List.of(GuiComponente.ARDUINOPANEL, GuiComponente.PRINTINGPANEL, GuiComponente.TABBEDPANEL)));
+		this.mainFrame.dataPool.logger.info("PrintingProzess - Background   //  ende() ");
+
 	}
 
 //    public void printProcess() {
