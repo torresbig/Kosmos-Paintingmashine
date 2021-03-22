@@ -17,7 +17,7 @@ import sun.awt.shell.ShellFolder;
 public class PaintingMaschine implements ActionListener{
 
 	private static Datenpool dp;
-	private final static String version = "v0.231_HOTFIX_BETA";
+	private final static String version = "v0.3_BETA";
 	private final static String pfad = ShellFolder.get("fileChooserDefaultFolder") + File.separator +  "PaintingMaschine";
 	private final static String dateiName = "paintingData.dat";
 	
