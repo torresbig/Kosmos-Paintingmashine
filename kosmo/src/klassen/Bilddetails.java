@@ -215,30 +215,30 @@ public class Bilddetails implements Serializable {
 	// nur zum testen welche werte hier raus kommen, da Liste zu lang für Console
 	// ---> listInDatei(colorSet, new File("list.txt")); <<< muss an beliebige
 	// stelle eingefügt werden
-
-	private static void mapInDatei(Map<Integer, List<String>> map, File datei) {
-		PrintWriter printWriter = null;
-		try {
-			printWriter = new PrintWriter(new FileWriter(datei));
-
-			Iterator<Map.Entry<Integer, List<String>>> iterator = map.entrySet().iterator();
-			while (iterator.hasNext()) {
-				Map.Entry<Integer, List<String>> entry = iterator.next();
-				printWriter.println("ZEILE " + entry.getKey() + ": " + entry.getValue());
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (printWriter != null)
-					printWriter.close();
-			} catch (Exception ioe) {
-				PaintingMaschine.detectDatapool().logger.info("BildDatails Exception " +ioe.getMessage());
-				ioe.getStackTrace();
-			}
-		}
-	}
+//
+//	private static void mapInDatei(Map<Integer, List<String>> map, File datei) {
+//		PrintWriter printWriter = null;
+//		try {
+//			printWriter = new PrintWriter(new FileWriter(datei));
+//
+//			Iterator<Map.Entry<Integer, List<String>>> iterator = map.entrySet().iterator();
+//			while (iterator.hasNext()) {
+//				Map.Entry<Integer, List<String>> entry = iterator.next();
+//				printWriter.println("ZEILE " + entry.getKey() + ": " + entry.getValue());
+//			}
+//
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (printWriter != null)
+//					printWriter.close();
+//			} catch (Exception ioe) {
+//				PaintingMaschine.detectDatapool().logger.info("BildDatails Exception " +ioe.getMessage());
+//				ioe.getStackTrace();
+//			}
+//		}
+//	}
 //	
 //	private static void farbenInDatei(List<Color> colorset, File datei) {
 //		PrintWriter printWriter = null;

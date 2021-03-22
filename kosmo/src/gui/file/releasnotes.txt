@@ -1,6 +1,6 @@
 22.03.2021 - V0.3_Beta
 Fixes:
-- 
+- Problem mit den Leeren-Zeilen gefixt
 
 ______________________________________________________
 
