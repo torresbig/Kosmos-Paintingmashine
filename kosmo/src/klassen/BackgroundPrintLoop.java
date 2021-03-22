@@ -41,15 +41,14 @@ public class BackgroundPrintLoop extends SwingWorker<Boolean, Integer> {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			pp.mainFrame.dataPool.logger
-					.info("PrintingProzess - Background - DONE FEHLER " + e.getMessage() + " //  done()");
+			pp.mainFrame.dataPool.logger.info("PrintingProzess - Background - DONE FEHLER " + e.getMessage() + " //  done()");
 		}
 	}
 
 	void printProcess(Map<Integer, List<String>> map) {
 		try {
 			pp.start();
-			for (int x = pp.bildMap.size() - 1; x >= 0 && !pp.printingProzess.isIDLE(); x--) {
+			for (int x = pp.bildMap.size(); x >= 0 && !pp.printingProzess.isIDLE(); x--) {
 				String zeichenZeile = "";
 				List<String> list = map.get(x);
 				zeichenZeile = String.join("", list);

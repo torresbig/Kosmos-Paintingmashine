@@ -178,54 +178,37 @@ public class Helper {
 
 	public static Map<Integer, List<String>> getMapOhneLeerdruck(Map<Integer, List<String>> map) {
 		Map<Integer, List<String>> m = new HashMap<Integer, List<String>>();
-		int mapKey = 0;
+		int mapKey = 1;
 		for (int i = 0; i <= map.size(); i++) {
 			
-			int nexti = i + 1;
-			
+			int whileI =i;
 			boolean weiter = true;
 			List<String> nl = new ArrayList<>();
-			while (weiter && map.get(i) != null) {
+			while (weiter && map.get(whileI) != null) {
 				
-				if (map.get(i).contains("1")) {
+				if (map.get(whileI).contains("1")) {
 					weiter = false;
-					nl = map.get(i);
+					if(nl.isEmpty()) {
+						nl = map.get(whileI);
+					}
 				} else {
+					whileI++;
 					if(nl.isEmpty()) {
 						nl.add("0");
 					}
 					else {
 						nl.add("><0");
 					}
-					if (map.get(nexti) != null) {
-						if (map.get(nexti).contains("1")) {
-							weiter = false;
-						} else {
-							nexti++;
-							if(nl.isEmpty()) {
-								nl.add("0");
-							}
-							else {
-								nl.add("><0");
-							}
-							
-						}
-					} else {
-						weiter = false;
-					}
-				}
-				System.out.println("Map schleife: " + weiter + " / i: " + i + " / nextKey: " + nexti + " / Liste: "
-						+ nl.toString());
-				PaintingMaschine.detectDatapool().logger.info("Helper - "+"Map schleife: " + weiter + " / i: " + i + " / nextKey: " + nexti + " / Liste: "
-						+ nl.toString() +"MapKey: "+mapKey+"   //  getMapOhneLeerdruck() ");
 
+				}
+				System.out.println("Map schleife: " + weiter + " / i: " + i + " / whileI: " + whileI + " / Liste: "+ nl.toString());
 			}
 			if(nl.size()>=1) {
 				m.put(mapKey, nl);
+				PaintingMaschine.detectDatapool().logger.info("Map komprimiert: Map Size "+ m.size() + "  mapKey: " + mapKey +" <<< Map keys "+ m.keySet());
 				mapKey++;
 			}
-			
-			i = nexti - 1;
+			i = whileI;
 		}
 		return m;
 	}
