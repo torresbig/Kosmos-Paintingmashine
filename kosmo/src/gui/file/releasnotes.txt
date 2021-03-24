@@ -1,10 +1,12 @@
-22.03.2021 - V0.3_Beta
+24.03.2021 - V0.3_Beta
 Fixes:
 - Problem mit den Leeren-Zeilen gefixt
 
 New Feature:
-- statiskik Funktione angelegt 
-- Eingabeleiste für Arduino-Komando
+- statiskik Funktionen angelegt und Gui gebaut
+- Eingabeleiste für Arduino-Komando im PrintPanel
+- Start --> Beenden Button jetzt funktionsfähig
+- Überschrift noch die Version eingefügt
 
 ______________________________________________________
 

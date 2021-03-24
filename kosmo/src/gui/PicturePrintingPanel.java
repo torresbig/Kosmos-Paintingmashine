@@ -195,12 +195,12 @@ public class PicturePrintingPanel extends JTabbedPane {
 	 */
 	
 	public void updatePrintingPanel() {
-		if(mainFrame.dataPool.getArduino().isConnected()) {
-			if(mainFrame.dataPool.getPrintingProzess() != null) {
-				if(mainFrame.dataPool.getPrintingProzess().printingProzess.isRUN()) {
+		if(mainFrame.datenPool.getArduino().isConnected()) {
+			if(mainFrame.datenPool.getPrintingProzess() != null) {
+				if(mainFrame.datenPool.getPrintingProzess().printingProzess.isRUN()) {
 					btnDruckauftragAbbrechen.setEnabled(true);
 				}
-				else if(mainFrame.dataPool.getPrintingProzess().printingProzess.isPAUSE()) {
+				else if(mainFrame.datenPool.getPrintingProzess().printingProzess.isPAUSE()) {
 					btnDruckauftragAbbrechen.setEnabled(true);
 				}
 				else {

@@ -35,11 +35,11 @@ public class BackgroundPrintLoop extends SwingWorker<Boolean, Integer> {
 		try {
 			Helper.guiUpdater(pp.mainFrame, GuiComponente.PRINTINGPANEL);
 			System.out.println("Backgroundprozess >> DONE");
-			pp.mainFrame.dataPool.logger.info("PrintingProzess - Background - DONE //  done()");
+			pp.mainFrame.datenPool.logger.info("PrintingProzess - Background - DONE //  done()");
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			pp.mainFrame.dataPool.logger.info("PrintingProzess - Background - DONE FEHLER " + e.getMessage() + " //  done()");
+			pp.mainFrame.datenPool.logger.info("PrintingProzess - Background - DONE FEHLER " + e.getMessage() + " //  done()");
 		}
 	}
 
@@ -55,7 +55,7 @@ public class BackgroundPrintLoop extends SwingWorker<Boolean, Integer> {
 				pp.mainFrame.getArduino().setArduinoCommunication("Druck der Zeile: " + x + " gestartet");
 				pp.mainFrame.getArduino().serialWritePictureLine(zeichenZeile);
 				PaintingMaschine.detectStatistik().countLinePixel(zeichenZeile.length());
-				pp.mainFrame.dataPool.logger.info("PrintingProzess - "+ pp.printingProzess.toString());
+				pp.mainFrame.datenPool.logger.info("PrintingProzess - "+ pp.printingProzess.toString());
 				while (pp.goToNextLine == false && !pp.printingProzess.isIDLE()) {
 					loopWhilePause();
 					try {
@@ -65,17 +65,17 @@ public class BackgroundPrintLoop extends SwingWorker<Boolean, Integer> {
 						}
 					} catch (Exception e) {
 						e.getStackTrace();
-						pp.mainFrame.dataPool.logger.info("PrintingProzess - Background -Loop Exception " + e.toString());
+						pp.mainFrame.datenPool.logger.info("PrintingProzess - Background -Loop Exception " + e.toString());
 					}
 				}
 				pp.goToNextLine = false;
 			}
 			pp.ende();
 			
-			pp.mainFrame.dataPool.logger.info("PrintingProzess - Background - ENDE");
+			pp.mainFrame.datenPool.logger.info("PrintingProzess - Background - ENDE");
 		} catch (Exception e) {
 			e.getStackTrace();
-			pp.mainFrame.dataPool.logger.info("PrintingProzess - Background - GESAMT " + e.toString());
+			pp.mainFrame.datenPool.logger.info("PrintingProzess - Background - GESAMT " + e.toString());
 
 		}
 	}

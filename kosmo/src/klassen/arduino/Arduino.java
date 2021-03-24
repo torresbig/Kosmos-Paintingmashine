@@ -131,7 +131,7 @@ public class Arduino implements Externalizable {
 
 	public void setArduinoCommunication(String text) {
 		System.out.println(text);
-		mainFrame.dataPool.logger.info("Arduino - SetCommunication Text: " + text);
+		mainFrame.datenPool.logger.info("Arduino - SetCommunication Text: " + text);
 		this.readWrite.addElement(text);
 		this.mainFrame.picPrintPanel.listArduinoOutput.setModel(this.readWrite.getListModel());
 	}
@@ -189,14 +189,14 @@ public class Arduino implements Externalizable {
 			BufferedReader input = new BufferedReader(new InputStreamReader(comPort.getInputStream()));
 			if (input.ready()) {
 				out = input.readLine();   //TODO: input.lines().map(line -> line + "\n").collect(Collectors.joining());
-				mainFrame.dataPool.logger.info("SerialRead Output ist: " + out);
+				mainFrame.datenPool.logger.info("SerialRead Output ist: " + out);
 			}
 			input.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(e.toString());
 			System.err.println("SCANNER ERROR");
-			mainFrame.dataPool.logger.info("Arudino - SerialRead Exception " + e.toString());
+			mainFrame.datenPool.logger.info("Arudino - SerialRead Exception " + e.toString());
 
 		}
 		if (out != "" && out != null) {
@@ -223,7 +223,7 @@ public class Arduino implements Externalizable {
 					} else {
 						if (x.contains("1")) {
 							System.out.println("WARNUNG CONTAINS GENOMMEN!");
-							mainFrame.dataPool.logger
+							mainFrame.datenPool.logger
 									.info("Arudino - serialReadPrintingProzess - WARNUNG CONTAINS GENOMMEN!");
 							result = true;
 						}
@@ -254,7 +254,7 @@ public class Arduino implements Externalizable {
 			in.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			mainFrame.dataPool.logger.info("Arudino - SerialRead Exception " + e.getMessage());
+			mainFrame.datenPool.logger.info("Arudino - SerialRead Exception " + e.getMessage());
 
 		}
 		if (out != "") {
@@ -272,13 +272,13 @@ public class Arduino implements Externalizable {
 			Thread.sleep(5);
 		} catch (Exception e) {
 			e.printStackTrace();
-			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
+			mainFrame.datenPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
 		}
 		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
 		if (s != "") {
 			setArduinoCommunication("Serial write >> " + s);
 			System.out.println("gesendete Zeichen: " + s);
-			mainFrame.dataPool.logger.info("SerialWrite: " + s + " // Methode serialWrite(String s)");
+			mainFrame.datenPool.logger.info("SerialWrite: " + s + " // Methode serialWrite(String s)");
 			PaintingMaschine.detectStatistik().countSerialWrites();
 			pout.print(s);
 			pout.flush();
@@ -304,7 +304,7 @@ public class Arduino implements Externalizable {
 
 		serialWrite(enumCommands.getStringWert());
 		System.out.println("serialWrite --> " + enumCommands.toString());
-		mainFrame.dataPool.logger
+		mainFrame.datenPool.logger
 				.info("SerialWrite: " + enumCommands.toString() + " // serialWrite(Commands enumCommands)");
 
 	}
@@ -317,12 +317,12 @@ public class Arduino implements Externalizable {
 		try {
 			Thread.sleep(5);
 		} catch (Exception e) {
-			mainFrame.dataPool.logger.info("Arudino - serialWritePictureLine Exception " + e.getMessage());
+			mainFrame.datenPool.logger.info("Arudino - serialWritePictureLine Exception " + e.getMessage());
 			e.getStackTrace();
 
 		}
 		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
-		mainFrame.dataPool.logger.info("Arudino - serialWritePictureLine Serial write >> " + "<" + s + ">");
+		mainFrame.datenPool.logger.info("Arudino - serialWritePictureLine Serial write >> " + "<" + s + ">");
 		setArduinoCommunication("Serial write >> " + "<" + s + ">");
 		PaintingMaschine.detectStatistik().countSerialWrites();
 		pout.print("<" + s + ">");
@@ -337,7 +337,7 @@ public class Arduino implements Externalizable {
 		try {
 			Thread.sleep(5);
 		} catch (Exception e) {
-			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
+			mainFrame.datenPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
 			e.getStackTrace();
 		}
 		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
@@ -367,7 +367,7 @@ public class Arduino implements Externalizable {
 		try {
 			Thread.sleep(5);
 		} catch (Exception e) {
-			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
+			mainFrame.datenPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
 			e.getStackTrace();
 		}
 		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
@@ -384,7 +384,7 @@ public class Arduino implements Externalizable {
 		try {
 			Thread.sleep(5);
 		} catch (Exception e) {
-			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
+			mainFrame.datenPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
 			e.getStackTrace();
 		}
 		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
@@ -396,7 +396,7 @@ public class Arduino implements Externalizable {
 		try {
 			Thread.sleep(delay);
 		} catch (Exception e) {
-			mainFrame.dataPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
+			mainFrame.datenPool.logger.info("Arudino - serialWrite Exception " + e.getMessage());
 			e.getStackTrace();
 		}
 	}

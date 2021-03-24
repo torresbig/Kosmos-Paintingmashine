@@ -67,7 +67,7 @@ public class PrintingProzess {
 		this.printingProzess = enu.PrintingProzess.RUN;
 		Helper.guiUpdater(this.mainFrame, new ArrayList<GuiComponente>(
 				List.of(GuiComponente.ARDUINOPANEL, GuiComponente.PRINTINGPANEL, GuiComponente.TABBEDPANEL)));
-		this.mainFrame.dataPool.logger.info("PrintingProzess - Background   //  start() ");
+		this.mainFrame.datenPool.logger.info("PrintingProzess - Background   //  start() ");
 
 	}
 	
@@ -78,7 +78,7 @@ public class PrintingProzess {
 		this.printingProzess = enu.PrintingProzess.IDLE;
 		Helper.guiUpdater(this.mainFrame, new ArrayList<GuiComponente>(
 				List.of(GuiComponente.ARDUINOPANEL, GuiComponente.PRINTINGPANEL, GuiComponente.TABBEDPANEL)));
-		this.mainFrame.dataPool.logger.info("PrintingProzess - Background   //  ende() ");
+		this.mainFrame.datenPool.logger.info("PrintingProzess - Background   //  ende() ");
 
 	}
 

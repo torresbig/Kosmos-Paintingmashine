@@ -46,8 +46,8 @@ public class ArduinoEinstellungen extends JFrame {
 	JLabel lblWert = new JLabel("Wert");
 
 	public ArduinoEinstellungen(MainWindow mainFrame) {
-		this.einstellungen = mainFrame.dataPool.getArduino().getEinstellungen() == null ? new HashMap<>()
-				: mainFrame.dataPool.getArduino().getEinstellungen();
+		this.einstellungen = mainFrame.datenPool.getArduino().getEinstellungen() == null ? new HashMap<>()
+				: mainFrame.datenPool.getArduino().getEinstellungen();
 		this.main = mainFrame;
 		initThis();
 	}
@@ -135,7 +135,7 @@ public class ArduinoEinstellungen extends JFrame {
 				
 				JButton btnWrite = new JButton("");
 
-				if (main.dataPool.getArduino().isConnected()) {
+				if (main.datenPool.getArduino().isConnected()) {
 					btnWrite.setEnabled(true);
 					btnWrite.setToolTipText("Daten schreiben");
 				} else {
@@ -152,8 +152,8 @@ public class ArduinoEinstellungen extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						String toWrite = entry.getValue().getVorzeichen() + textField.getText()+ entry.getValue().getAbschlusszeichen();
 						entry.getValue().setWert(textField.getText());
-						if (main.dataPool.getArduino().isConnected()) {
-							main.dataPool.getArduino().serialWrite(toWrite);
+						if (main.datenPool.getArduino().isConnected()) {
+							main.datenPool.getArduino().serialWrite(toWrite);
 						}
 					}
 				});
@@ -242,12 +242,12 @@ public class ArduinoEinstellungen extends JFrame {
 	}
 
 	public void updateDruckformat() {
-		if(main.dataPool.getArduino().zahlenZusammen == 1) {
+		if(main.datenPool.getArduino().zahlenZusammen == 1) {
 			rdbtnVorzeichenEineln.setSelected(false);
 			rdbtnAllesGetrennt.setSelected(true);
 			rdbtnKomplett.setSelected(false);
 		}
-		else if(main.dataPool.getArduino().zahlenZusammen == 2) {
+		else if(main.datenPool.getArduino().zahlenZusammen == 2) {
 			rdbtnVorzeichenEineln.setSelected(true);
 			rdbtnAllesGetrennt.setSelected(false);
 			rdbtnKomplett.setSelected(false);

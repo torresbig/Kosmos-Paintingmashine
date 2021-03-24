@@ -1,14 +1,11 @@
 package gui;
 
 import javax.swing.JDialog;
-import javax.swing.JFrame;
-
 import klassen.Statistik;
 import main.PaintingMaschine;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.util.List;
-
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import java.awt.Color;

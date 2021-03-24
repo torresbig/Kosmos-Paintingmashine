@@ -33,7 +33,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Datenpool dataPool;
+	public Datenpool datenPool;
 	public Connect conDialog;
 	public TabbedPanels tabbedPanels;
 	public PicturePrintingPanel picPrintPanel;
@@ -41,9 +41,9 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 	public ArduinoEinstellungen arduinoConf;
 
 	public MainWindow(Datenpool dp) {
-		this.dataPool = dp;
+		this.datenPool = dp;
 		if(this.getArduino()== null) {
-			this.dataPool.setArduino(new Arduino(this));
+			this.datenPool.setArduino(new Arduino(this));
 		}
 		initialize();
 		setUpActionListener();
@@ -58,7 +58,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(MainWindow.class.getResource("/gui/grafik/arduino_22429_klein.png")));
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
-		setTitle("Kosmos Painting Machine");
+		setTitle("Kosmos Painting Machine - " + datenPool.getVersion());
 		setSize(new Dimension(1024, 768));
 		setMinimumSize(new Dimension(1024, 768));
 		setBounds(100, 100, 800, 600);
@@ -157,7 +157,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 
 			Bilddetails bd = OpenSave.bildOeffnen();
 			if (bd != null) {
-				this.dataPool.setBildDetails(bd);
+				this.datenPool.setBildDetails(bd);
 				this.picPrintPanel.changeBildName(bd.name);
 
 				initBild(bd.getCurrentPicture());
@@ -219,7 +219,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 					initBild(this.getBildDetails().getGreyPicture());
 
 				} else {
-					this.dataPool
+					this.datenPool
 							.setBildDetails(Helper.getLastPicture(this.getBildDetails(), this.picPrintPanel));
 					initBild(this.getBildDetails().getCurrentPicture());
 
@@ -232,7 +232,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 					initBild(this.getBildDetails().getIndexedPicture());
 
 				} else {
-					this.dataPool
+					this.datenPool
 							.setBildDetails(Helper.getLastPicture(this.getBildDetails(), this.picPrintPanel));
 					initBild(this.getBildDetails().getCurrentPicture());
 				}
@@ -244,7 +244,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 					initBild(this.getBildDetails().getBlackWhitePicture());
 
 				} else {
-					this.dataPool
+					this.datenPool
 							.setBildDetails(Helper.getLastPicture(this.getBildDetails(), this.picPrintPanel));
 					initBild(this.getBildDetails().getCurrentPicture());
 				}
@@ -255,7 +255,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 				if (this.picPrintPanel.btnInvertColors.isSelected()) {
 					initBild(this.getBildDetails().getInvertetColorPicture());
 				} else {
-					this.dataPool
+					this.datenPool
 							.setBildDetails(Helper.getLastPicture(this.getBildDetails(), this.picPrintPanel));
 					initBild(this.getBildDetails().getCurrentPicture());
 				}
@@ -288,7 +288,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 				this.picPrintPanel.setSelectedIndex(1);
 				if (this.getBildDetails() != null) {
 					if (getPrintingProzess() == null) {
-						dataPool.setPrintingProzess(new PrintingProzess(this));
+						datenPool.setPrintingProzess(new PrintingProzess(this));
 					}
 
 					if (getPrintingProzess().printingProzess.isPAUSE()) {
@@ -404,7 +404,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 
 		if (e.getSource() == this.conDialog.connectButton) {
 			if (!getArduino().isConnected()) {
-				this.dataPool.setArduino(new Arduino(this,conDialog.portList.getSelectedItem().toString()));
+				this.datenPool.setArduino(new Arduino(this,conDialog.portList.getSelectedItem().toString()));
 				if (this.getArduino().openConnection()) {
 					Helper.guiUpdater(this,
 							new ArrayList<GuiComponente>(List.of(GuiComponente.TABBEDPANEL, GuiComponente.ARDUINOPANEL,
@@ -433,7 +433,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 
 			else {
 				if (Helper.getTheOneComPort() != "false") {
-					this.dataPool.setArduino(new Arduino(this,Helper.getTheOneComPort()));
+					this.datenPool.setArduino(new Arduino(this,Helper.getTheOneComPort()));
 					if (this.getArduino().openConnection()) {
 						Helper.guiUpdater(this,
 								new ArrayList<GuiComponente>(List.of(GuiComponente.TABBEDPANEL,
@@ -474,6 +474,11 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 		}
 		if (e.getSource() == this.menuBar.mntmStatistik) {
 			new StatistikGui(this);
+		}
+		
+		if (e.getSource() == this.menuBar.mntmClose) {
+			dispose();
+			System.exit( 0 );
 		}
 
 //		if (e.getSource() == this.menuBar.mntmOpen) {
@@ -516,7 +521,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 						try {
 							Thread.sleep(150);
 						} catch (Exception e) {
-							dataPool.logger.info("MainWindow - mousePressed Exception " +e.getMessage() + "  MouseEvent: "+m.toString());
+							datenPool.logger.info("MainWindow - mousePressed Exception " +e.getMessage() + "  MouseEvent: "+m.toString());
 							e.getStackTrace();
 						}
 					}
@@ -534,7 +539,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 						try {
 							Thread.sleep(150);
 						} catch (Exception e) {
-							dataPool.logger.info("MainWindow - mousePressed Exception " +e.getMessage() + "  MouseEvent: "+m.toString());
+							datenPool.logger.info("MainWindow - mousePressed Exception " +e.getMessage() + "  MouseEvent: "+m.toString());
 							e.getStackTrace();
 						}
 					}
@@ -551,7 +556,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 						try {
 							Thread.sleep(150);
 						} catch (Exception e) {
-							dataPool.logger.info("MainWindow - mousePressed Exception " +e.getMessage() + "  MouseEvent: "+m.toString());
+							datenPool.logger.info("MainWindow - mousePressed Exception " +e.getMessage() + "  MouseEvent: "+m.toString());
 							e.getStackTrace();
 						}
 					}
@@ -568,7 +573,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 						try {
 							Thread.sleep(150);
 						} catch (Exception e) {
-							dataPool.logger.info("MainWindow - mousePressed Exception " +e.getMessage() + "  MouseEvent: "+m.toString());
+							datenPool.logger.info("MainWindow - mousePressed Exception " +e.getMessage() + "  MouseEvent: "+m.toString());
 							e.getStackTrace();
 						}
 					}
@@ -648,14 +653,14 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 	}
 	
 	public Arduino getArduino() {
-		return this.dataPool.getArduino();
+		return this.datenPool.getArduino();
 	}
 	
 	public PrintingProzess getPrintingProzess() {
-		return this.dataPool.getPrintingProzess();
+		return this.datenPool.getPrintingProzess();
 	}
 	
 	public Bilddetails getBildDetails() {
-		return this.dataPool.getBildDetails();
+		return this.datenPool.getBildDetails();
 	}
 }
