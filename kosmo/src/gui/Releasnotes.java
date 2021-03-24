@@ -25,7 +25,7 @@ public class Releasnotes extends JDialog {
 	private static final long serialVersionUID = 1L;
 	
 	
-	private final String datum = "10.03.2021";
+	private final String datum = "24.03.2021";
 	private Datenpool dp;
 	
 	
