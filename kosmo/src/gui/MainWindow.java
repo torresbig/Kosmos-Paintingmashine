@@ -1,9 +1,6 @@
 package gui;
 
 import javax.swing.JFrame;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import enu.Calibrate;
 import enu.Commands;
 import enu.GuiComponente;
@@ -26,7 +23,6 @@ import klassen.ImagePanel;
 import klassen.arduino.Arduino;
 import main.OpenSave;
 import main.Datenpool;
-import main.PaintingMaschine;
 import java.awt.Dialog.ModalExclusionType;
 import java.awt.Toolkit;
 
@@ -113,11 +109,12 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 		this.conDialog.connectButton.addActionListener(this);
 
 		this.menuBar.mntmArduinoConnect.addActionListener(this);
-//		this.menuBar.mntmOpen.addActionListener(this);
+		this.menuBar.mntmClose.addActionListener(this);
 		this.menuBar.mntmSave.addActionListener(this);
 		this.menuBar.mntmKommandosFestlegen.addActionListener(this);
 		this.menuBar.mntmReleasNotes.addActionListener(this);
 		this.menuBar.mntmKontakt.addActionListener(this);
+		this.menuBar.mntmStatistik.addActionListener(this);
 
 		this.picPrintPanel.btnFarbenReduzieren.addActionListener(this);
 		this.picPrintPanel.btnBlackWhite.addActionListener(this);
@@ -127,6 +124,7 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 		this.picPrintPanel.btnFarbenReduzierenRegler.addActionListener(this);
 		this.picPrintPanel.btnInvertColors.addActionListener(this);
 		this.picPrintPanel.btnDruckauftragAbbrechen.addActionListener(this);
+		this.picPrintPanel.btnSend.addActionListener(this);
 
 		this.tabbedPanels.btnDown.addActionListener(this);
 		this.tabbedPanels.btnUp.addActionListener(this);
@@ -323,6 +321,12 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 			Helper.guiUpdater(this, new ArrayList<GuiComponente>(
 					List.of(GuiComponente.ARDUINOPANEL, GuiComponente.PRINTINGPANEL, GuiComponente.TABBEDPANEL)));
 		}
+		
+		if(e.getSource() == this.picPrintPanel.btnSend) {
+			if(this.picPrintPanel.textArduinoComand.getText() != "" ) {
+				this.getArduino().serialWrite(this.picPrintPanel.textArduinoComand.getText());
+			}
+		}
 
 		/*
 		 * 
@@ -467,6 +471,9 @@ public class MainWindow extends JFrame implements ActionListener, MouseListener,
 		if (e.getSource() == this.menuBar.mntmSave) {
 			OpenSave.saveDatapool();
 
+		}
+		if (e.getSource() == this.menuBar.mntmStatistik) {
+			new StatistikGui(this);
 		}
 
 //		if (e.getSource() == this.menuBar.mntmOpen) {

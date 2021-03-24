@@ -20,6 +20,7 @@ import gui.MainWindow;
 import gui.arduino.AlertBox;
 import klassen.ArduinoInfosListModel;
 import klassen.EinstellungsParameter;
+import main.PaintingMaschine;
 
 public class Arduino implements Externalizable {
 	private static final long serialVersionUID = 1L;
@@ -93,6 +94,7 @@ public class Arduino implements Externalizable {
 				} catch (Exception e) {
 				}
 				conState = ConnectionState.CONNECTED;
+				PaintingMaschine.detectStatistik().countConnectArduino();
 				setArduinoCommunication("Status >> Arduino an " + comPort.getSystemPortName() + " verbunden");
 				setArduinoCommunication("Status >> Arduino Baudrate " + String.valueOf(comPort.getBaudRate()));
 				this.setArduinoInfos();
@@ -199,6 +201,8 @@ public class Arduino implements Externalizable {
 		}
 		if (out != "" && out != null) {
 			setArduinoCommunication("Serial read >> " + out);
+			PaintingMaschine.detectStatistik().countSerialReads();
+
 
 		}
 		return out;
@@ -255,6 +259,8 @@ public class Arduino implements Externalizable {
 		}
 		if (out != "") {
 			setArduinoCommunication("Serial read >> " + out);
+			PaintingMaschine.detectStatistik().countSerialReads();
+
 		}
 		return out;
 	}
@@ -271,11 +277,13 @@ public class Arduino implements Externalizable {
 		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
 		if (s != "") {
 			setArduinoCommunication("Serial write >> " + s);
+			System.out.println("gesendete Zeichen: " + s);
+			mainFrame.dataPool.logger.info("SerialWrite: " + s + " // Methode serialWrite(String s)");
+			PaintingMaschine.detectStatistik().countSerialWrites();
+			pout.print(s);
+			pout.flush();
 		}
-		System.out.println("gesendete Zeichen: " + s);
-		mainFrame.dataPool.logger.info("SerialWrite: " + s + " // Methode serialWrite(String s)");
-		pout.print(s);
-		pout.flush();
+		
 
 	}
 
@@ -314,10 +322,12 @@ public class Arduino implements Externalizable {
 
 		}
 		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
-		pout.print("<" + s + ">");
-		pout.flush();
 		mainFrame.dataPool.logger.info("Arudino - serialWritePictureLine Serial write >> " + "<" + s + ">");
 		setArduinoCommunication("Serial write >> " + "<" + s + ">");
+		PaintingMaschine.detectStatistik().countSerialWrites();
+		pout.print("<" + s + ">");
+		pout.flush();
+		
 	}
 
 	public void serialWrite(String s, int noOfChars, int delay) {
@@ -342,9 +352,12 @@ public class Arduino implements Externalizable {
 		}
 		if (s != "") {
 			setArduinoCommunication("Serial write >> " + s.substring(i) + " (Delay: " + delay);
+			PaintingMaschine.detectStatistik().countSerialWrites();
+
+			pout.write(s.substring(i));
+			pout.flush();
 		}
-		pout.write(s.substring(i));
-		pout.flush();
+		
 
 	}
 
@@ -358,8 +371,10 @@ public class Arduino implements Externalizable {
 			e.getStackTrace();
 		}
 		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
-		pout.write(c);
+		PaintingMaschine.detectStatistik().countSerialWrites();
 		setArduinoCommunication("Serial write >> " + c);
+
+		pout.write(c);
 		pout.flush();
 	}
 
@@ -374,6 +389,8 @@ public class Arduino implements Externalizable {
 		}
 		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
 		setArduinoCommunication("Serial write >> " + c + " (Delay: " + delay);
+		PaintingMaschine.detectStatistik().countSerialWrites();
+
 		pout.write(c);
 		pout.flush();
 		try {

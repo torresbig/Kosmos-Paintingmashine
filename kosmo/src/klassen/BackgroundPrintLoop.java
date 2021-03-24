@@ -1,13 +1,11 @@
 package klassen;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.SwingWorker;
 
-import enu.Commands;
 import enu.GuiComponente;
-import klassen.arduino.Arduino;
+import main.PaintingMaschine;
 
 public class BackgroundPrintLoop extends SwingWorker<Boolean, Integer> {
 
@@ -47,6 +45,7 @@ public class BackgroundPrintLoop extends SwingWorker<Boolean, Integer> {
 
 	void printProcess(Map<Integer, List<String>> map) {
 		try {
+			PaintingMaschine.detectStatistik().countStartPrintingProcess();
 			pp.start();
 			for (int x = pp.bildMap.size(); x >= 0 && !pp.printingProzess.isIDLE(); x--) {
 				String zeichenZeile = "";
@@ -55,6 +54,7 @@ public class BackgroundPrintLoop extends SwingWorker<Boolean, Integer> {
 				loopWhilePause();
 				pp.mainFrame.getArduino().setArduinoCommunication("Druck der Zeile: " + x + " gestartet");
 				pp.mainFrame.getArduino().serialWritePictureLine(zeichenZeile);
+				PaintingMaschine.detectStatistik().countLinePixel(zeichenZeile.length());
 				pp.mainFrame.dataPool.logger.info("PrintingProzess - "+ pp.printingProzess.toString());
 				while (pp.goToNextLine == false && !pp.printingProzess.isIDLE()) {
 					loopWhilePause();

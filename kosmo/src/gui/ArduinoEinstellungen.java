@@ -6,13 +6,7 @@ import java.util.Map;
 import javax.swing.JFrame;
 import java.awt.Toolkit;
 import enu.Datentypen;
-import enu.GuiComponente;
 import klassen.EinstellungsParameter;
-import klassen.Helper;
-import klassen.arduino.Arduino;
-import main.Datenpool;
-import main.PaintingMaschine;
-
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;

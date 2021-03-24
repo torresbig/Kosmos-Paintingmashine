@@ -6,13 +6,9 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 import javax.swing.DefaultListModel;
-
-import com.fazecast.jSerialComm.SerialPort;
-
 import klassen.Bilddetails;
 import klassen.PrintingProzess;
 import klassen.SaveData;
-import klassen.Statistik;
 import klassen.arduino.Arduino;
 import klassen.arduino.ReadWriteData;
 
@@ -24,7 +20,6 @@ public class Datenpool implements Serializable {
 	private Arduino arduino;
 	private File dateiName;
 	private File pfad;
-	private Statistik statistik;
 	private PrintingProzess printingProzess;
 	public Logger logger;
 	private FileHandler fh;  
@@ -45,7 +40,6 @@ public class Datenpool implements Serializable {
 		this.bildDetails = null;
 		this.dateiName = null;
 		this.pfad = null;
-		this.statistik = null;
 		this.printingProzess = null;
 		this.logger = null;
 		this.setFh(null);
@@ -58,7 +52,6 @@ public class Datenpool implements Serializable {
 		this.arduino.setReadWrite(new ReadWriteData(new DefaultListModel<>()));
 		this.dateiName = sd.getDateiName();
 		this.pfad = sd.getPfad();
-		this.statistik = sd.getStatistik();
 	}
 	
 	public void initialize(String pfad, String dateiName) {
@@ -112,13 +105,9 @@ public class Datenpool implements Serializable {
 		return this.pfad + File.separator + this.dateiName;
 	}
 	
-	public Statistik getStatistik() {
-		return statistik;
-	}
 
-	public void setStatistik(Statistik statistik) {
-		this.statistik = statistik;
-	}
+
+
 
 	public FileHandler getFh() {
 		return fh;

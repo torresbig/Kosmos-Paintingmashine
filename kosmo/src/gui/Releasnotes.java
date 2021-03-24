@@ -1,11 +1,7 @@
 package gui;
 
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JScrollBar;
-
-import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JScrollPane;
 
@@ -14,15 +10,8 @@ import main.PaintingMaschine;
 
 import java.awt.Toolkit;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
-import java.text.DateFormat;
-import java.util.GregorianCalendar;
-
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 

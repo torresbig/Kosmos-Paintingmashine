@@ -17,6 +17,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import klassen.Bilddetails;
 import klassen.SaveData;
+import klassen.Statistik;
 
 public class OpenSave {
 
@@ -42,6 +43,8 @@ public class OpenSave {
 				String p = chooser.getSelectedFile().getPath();
 				String n = chooser.getSelectedFile().getName();
 				img = new Bilddetails(bi, n, p);
+				PaintingMaschine.detectStatistik().countOpenPicture();
+
 			} catch (IOException ex) {
 				ex.printStackTrace();
 				System.out.println("Fehler beim Laden des Bildes!");
@@ -60,7 +63,7 @@ public class OpenSave {
 			File datei = null;
 			if (Files.exists(Paths.get(pfad))) {
 				datei = new File(pfad);
-				System.out.println("Datei existiert");
+				System.out.println("Datenpool-Datei existiert");
 
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(datei));
 				Object rawObject = ois.readObject();
@@ -68,17 +71,16 @@ public class OpenSave {
 
 				if (rawObject instanceof SaveData) {
 					sd = (SaveData) rawObject;
-					System.out.println("Daten geladen");
+					System.out.println("Datenpool-Daten geladen");
 					sd.getArduino();
 					sd.getCompletFilePathName();
-					sd.getStatistik();
 					dp.loadData(sd);
 
 				} else {
-					System.err.println("Datei NICHT gelesen");
+					System.err.println("Datenpool-Datei NICHT gelesen");
 				}
 			} else {
-				System.out.println("Datei nicht vorhanden");
+				System.out.println("Datenpool-Datei nicht vorhanden");
 
 			}
 
@@ -91,17 +93,14 @@ public class OpenSave {
 
 	public static void saveDatapool() {
 		Datenpool dp = PaintingMaschine.detectDatapool();
-		SaveData sd = new SaveData(dp.getArduino(), dp.getDateiName(), dp.getDateiPfad(), dp.getStatistik());
+		SaveData sd = new SaveData(dp.getArduino(), dp.getDateiName(), dp.getDateiPfad());
 		try {
 			File datei = sd.getDateiName();
 			File dir = sd.getPfad();
 			sd.getArduino();
 			if (!Files.exists(Paths.get(sd.getCompletFilePathName()))) {
 				dir.mkdir();
-				// dir.mkdirs();
 				datei.createNewFile();
-				System.out.println(
-						"PFad erstellt" + "existiert jetzt?: " + Files.exists(Paths.get(sd.getCompletFilePathName())));
 			}
 			ObjectOutputStream oos = new ObjectOutputStream(
 					new FileOutputStream(new File(sd.getCompletFilePathName())));
@@ -109,13 +108,80 @@ public class OpenSave {
 			oos.writeObject(sd);
 			oos.flush();
 			oos.close();
-			System.out.println("Daten gespeichert");
+			System.out.println("Datenpool-Daten gespeichert");
 
 		} catch (IOException e) {
-			System.out.println("Daten NICHT gespeichert | FEHLER: " + e.toString());
-			dp.logger.info("OpenSave -  Exception " +e.getMessage());
+			System.out.println("Datenpool-Daten NICHT gespeichert | FEHLER: " + e.toString());
+			dp.logger.info("OpenSave - Datenpool -  Exception " +e.getMessage());
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public static Statistik loadStatistik(String p) {
+		Statistik st = null;
+		String pfad = p + File.separator + "statistik.dat";
+		try {
+
+			File datei = null;
+			if (Files.exists(Paths.get(pfad))) {
+				datei = new File(pfad);
+				System.out.println("Statistik-Datei existiert");
+
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(datei));
+				Object rawObject = ois.readObject();
+				ois.close();
+
+				if (rawObject instanceof Statistik) {
+					st = (Statistik) rawObject;
+					System.out.println("Statistik-Daten geladen");
+
+				} else {
+					
+					System.err.println("Statistik-Datei NICHT gelesen << Instanz nicht vom Typ Statistik << Pfad: "+pfad);
+
+				}
+			} else {
+				System.out.println("Statistik-Datei nicht vorhanden");
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(st != null) {
+			System.out.println("Statistik aufrufe Programm: " +st.getOpenProgram());
+		}
+		
+
+		return st;
+	}
+
+	public static void saveStatistik(String p, Statistik statistik) {
+		String pfad = p + File.separator + "statistik.dat";
+		
+		try {
+			File file = new File(pfad);
+			File dir = new File(p);
+			if (!Files.exists(Paths.get(pfad))) {
+				dir.mkdir();
+				file.createNewFile();
+			}
+			ObjectOutputStream oos = new ObjectOutputStream(
+					new FileOutputStream(new File(pfad)));
+
+			oos.writeObject(statistik);
+			oos.flush();
+			oos.close();
+			System.out.println("Statistik-Daten gespeichert");
+
+		} catch (IOException e) {
+			System.out.println("Daten NICHT gespeichert | FEHLER: " + e.toString());
+			PaintingMaschine.detectDatapool().logger.info("OpenSave - Statistik -  Exception " +e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	
 
 }

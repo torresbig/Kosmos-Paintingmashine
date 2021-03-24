@@ -12,7 +12,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import klassen.ImagePanel;
-import klassen.arduino.Arduino;
 import javax.swing.JList;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
@@ -56,8 +55,8 @@ public class PicturePrintingPanel extends JTabbedPane {
 	public JToggleButton btnInvertColors = new JToggleButton("Farben invertieren");
 	public JList<String> listArduinoOutput = new JList<String>();
 	public JScrollPane scrollPane = new JScrollPane();
-	public JLabel lblNewLabel = new JLabel();
 	public JButton btnDruckauftragAbbrechen = new JButton("<html>Druckvorgang<br>abbrechen</html> ");
+	public JTextField textArduinoComand;
 
 	
 	private void initPanelPicture() {
@@ -124,7 +123,9 @@ public class PicturePrintingPanel extends JTabbedPane {
 		
 	}
 	
-	
+	public JButton btnSend = new JButton("Daten Schreiben");		
+	public JLabel lblSerialWirte = new JLabel("Serial Write (String):");
+
 	private void initPanelPrinting() {
 		addTab("Printing", null, panelPrinting, null);
 		panelPrinting.setBounds(0, 0, 766, 708);
@@ -133,21 +134,31 @@ public class PicturePrintingPanel extends JTabbedPane {
 		scrollPane.setForeground(Color.WHITE);
 		scrollPane.setBackground(Color.BLACK);
 		scrollPane.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		scrollPane.setBounds(10, 96, 741, 551);
+		scrollPane.setBounds(10, 96, 741, 506);
 		scrollPane.setViewportView(listArduinoOutput);
 		listArduinoOutput.setLayoutOrientation(JList.VERTICAL);
 		panelPrinting.add(scrollPane);
-		lblNewLabel.setText("<html><body>Dieser Bereich ist evtl. zuk\u00FCnftig f\u00FCr die Einzeige der aktuell zu druckenden Pixel gedacht. Aber atm wird hier nur die Kommunikation mit dem Arduino aufgezeigt.</body></html>");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel.setBounds(10, 11, 550, 74);
-		panelPrinting.add(lblNewLabel);
 		btnDruckauftragAbbrechen.setBorder(new LineBorder(new Color(0, 0, 0)));
 		btnDruckauftragAbbrechen.setIcon(new ImageIcon(PicturePrintingPanel.class.getResource("/gui/grafik/paint-spray_47194_abbrechen.png")));
 		btnDruckauftragAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnDruckauftragAbbrechen.setToolTipText("<html>Druckauftrag stoppen<br>und abbrechen</html>");
 		btnDruckauftragAbbrechen.setBounds(604, 10, 147, 75);
 		panelPrinting.add(btnDruckauftragAbbrechen);
+		
+		textArduinoComand = new JTextField();
+		textArduinoComand.setToolTipText("Hier ein Befehl eingeben, der via Serial Write als String an den Arduino gegebn wird");
+		textArduinoComand.setBounds(157, 624, 423, 20);
+		panelPrinting.add(textArduinoComand);
+		textArduinoComand.setColumns(10);
+		
+		
+		btnSend.setBounds(604, 623, 147, 23);
+		panelPrinting.add(btnSend);
+		
+		lblSerialWirte.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSerialWirte.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblSerialWirte.setBounds(9, 619, 152, 28);
+		panelPrinting.add(lblSerialWirte);
 	}
 	
 	
@@ -204,5 +215,4 @@ public class PicturePrintingPanel extends JTabbedPane {
 			this.setEnabledAt(1, false);
 		}
 	}
-
 }
