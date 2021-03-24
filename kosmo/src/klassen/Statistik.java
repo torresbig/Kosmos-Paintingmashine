@@ -131,6 +131,20 @@ public class Statistik implements Serializable {
 		this.serialReads++;
 	}
 	
+	public void reset() {
+		this.connectArduino = 0;
+		this.openProgram = 0;
+		this.printedLines = 0;
+		this.printedPictures = 0;
+		this.printedPixel = 0;
+		this.startPrintingProcess = 0;
+		this.canceldPrinting = 0;
+		this.pausePrinting = 0;
+		this.openPicture = 0;
+		this.serialReads =0;
+		this.serialWrites = 0;
+	}
+	
 	public List<String> getStatistik() {
 		List<String> st = new ArrayList<String>();
 	
