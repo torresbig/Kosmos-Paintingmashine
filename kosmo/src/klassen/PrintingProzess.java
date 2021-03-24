@@ -8,7 +8,7 @@ import enu.Calibrate;
 import enu.Commands;
 import enu.GuiComponente;
 import gui.MainWindow;
-import main.Datenpool;
+import main.PaintingMaschine;
 
 public class PrintingProzess {
 
@@ -40,6 +40,7 @@ public class PrintingProzess {
 	}
 
 	public void pause() {
+		PaintingMaschine.detectStatistik().countPausePrinting();
 		this.mainFrame.getArduino().setArduinoCommunication("Druckvorgang PAUSE");
 		this.mainFrame.tabbedPanels.tglbtnManuel.setSelected(true);
 		this.mainFrame.getArduino().serialWrite(Commands.MODUS_MANUELL);
@@ -49,6 +50,7 @@ public class PrintingProzess {
 	}
 
 	public void cancel() {
+		PaintingMaschine.detectStatistik().countCanceldPrinting();
 		this.mainFrame.getArduino().setArduinoCommunication("Druckvorgang ABBRUCH");
 		this.mainFrame.getArduino().setCalibrateStatus(Calibrate.UNBESTIMMT);
 		this.mainFrame.tabbedPanels.tglbtnManuel.setSelected(true);
@@ -70,6 +72,7 @@ public class PrintingProzess {
 	}
 	
 	public void ende() {
+		PaintingMaschine.detectStatistik().countPrintedPicture();
 		this.mainFrame.getArduino().setArduinoCommunication("Druckvorgang ENDE");
 		this.bildMap = null;
 		this.printingProzess = enu.PrintingProzess.IDLE;
