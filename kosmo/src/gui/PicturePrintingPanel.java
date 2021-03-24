@@ -12,11 +12,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import klassen.ImagePanel;
-import klassen.arduino.Arduino;
 import javax.swing.JList;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
-
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;

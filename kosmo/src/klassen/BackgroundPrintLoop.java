@@ -1,13 +1,9 @@
 package klassen;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.SwingWorker;
-
-import enu.Commands;
 import enu.GuiComponente;
-import klassen.arduino.Arduino;
 
 public class BackgroundPrintLoop extends SwingWorker<Boolean, Integer> {
 

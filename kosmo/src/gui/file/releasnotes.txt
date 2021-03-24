@@ -2,6 +2,9 @@
 Fixes:
 - Problem mit den Leeren-Zeilen gefixt
 
+New Features:
+- blinkende lämpchen wenn write / read
+
 ______________________________________________________
 
 11.03.2021 - V0.231_HOTFIX_Beta

@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import gui.MainWindow;
@@ -17,7 +16,7 @@ import sun.awt.shell.ShellFolder;
 public class PaintingMaschine implements ActionListener{
 
 	private static Datenpool dp;
-	private final static String version = "v0.3_BETA";
+	private final static String version = "v1.0";
 	private final static String pfad = ShellFolder.get("fileChooserDefaultFolder") + File.separator +  "PaintingMaschine";
 	private final static String dateiName = "paintingData.dat";
 	
