@@ -178,19 +178,24 @@ public class Helper {
 		Map<Integer, List<String>> m = new HashMap<Integer, List<String>>();
 		int mapKey = 1;
 		for (int i = 0; i <= map.size(); i++) {
-			
-			int whileI =i;
 			boolean weiter = true;
 			List<String> nl = new ArrayList<>();
-			while (weiter && map.get(whileI) != null) {
+			while (weiter && map.get(i) != null) {
 				
-				if (map.get(whileI).contains("1")) {
-					weiter = false;
+				if (map.get(i).contains("1")) {
+					PaintingMaschine.detectDatapool().logger.info("Zeile hat eine 1 | Aktuelle Zeile: " + map.get(i));
 					if(nl.isEmpty()) {
-						nl = map.get(whileI);
+						m.put(mapKey++, map.get(i));
+						PaintingMaschine.detectDatapool().logger.info("Map komprimiert: Liste <EMPTY> | Map Size "+ m.size() + "  mapKey: " + mapKey +" <<< Map keys "+ m.keySet());
 					}
+					else {
+						m.put(mapKey++, nl);
+						m.put(mapKey++, map.get(i));
+						PaintingMaschine.detectDatapool().logger.info("Map komprimiert: Liste <NOT EMPTY> | Map Size "+ m.size() + "  mapKey: " + mapKey +" <<< Map keys "+ m.keySet());
+					}
+					weiter = false;
 				} else {
-					whileI++;
+					i++;
 					if(nl.isEmpty()) {
 						nl.add("0");
 					}
@@ -199,14 +204,8 @@ public class Helper {
 					}
 
 				}
-				System.out.println("Map schleife: " + weiter + " / i: " + i + " / whileI: " + whileI + " / Liste: "+ nl.toString());
+				PaintingMaschine.detectDatapool().logger.info("Map schleife: " + weiter + " / i: " + i + " / Liste: "+ nl.toString());
 			}
-			if(nl.size()>=1) {
-				m.put(mapKey, nl);
-				PaintingMaschine.detectDatapool().logger.info("Map komprimiert: Map Size "+ m.size() + "  mapKey: " + mapKey +" <<< Map keys "+ m.keySet());
-				mapKey++;
-			}
-			i = whileI;
 		}
 		return m;
 	}

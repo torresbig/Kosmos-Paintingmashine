@@ -16,7 +16,7 @@ public class PrintingProzess {
 	Map<Integer, List<String>> bildMap;
 	boolean goToNextLine;
 	public enu.PrintingProzess printingProzess;
-	
+
 	private BackgroundPrintLoop bgpl;
 
 	public PrintingProzess(MainWindow mainFrame) {
@@ -31,6 +31,16 @@ public class PrintingProzess {
 
 	}
 
+	/**
+	 * Druckvorgang RESUME >> resume()
+	 * <p>
+	 * - start() wird aufgerufen <br>
+	 * - Auto-Button wird aktiviert <br>
+	 * - SerialWirte - MODUS_AUTO wird gesetzt
+	 * <p>
+	 * Gui Aktualisierung: GuiComponente.ARDUINOPANEL, GuiComponente.PRINTINGPANEL,
+	 * GuiComponente.TABBEDPANEL
+	 */
 	public void resume() {
 		start();
 		this.mainFrame.tabbedPanels.tglbtnAuto.setSelected(true);
@@ -39,6 +49,17 @@ public class PrintingProzess {
 				List.of(GuiComponente.ARDUINOPANEL, GuiComponente.PRINTINGPANEL, GuiComponente.TABBEDPANEL)));
 	}
 
+	/**
+	 * Druckvorgang PAUSE >> pause()
+	 * <p>
+	 * Alles wird auf Pause gesetzt <br>
+	 * - Arduino Communication <br>
+	 * - Manuel-Button wird aktiviert <br>
+	 * - SerialWirte - MODUS_MANUELL wird gesetzt - PrintingProzess = PAUSE
+	 * <p>
+	 * Gui Aktualisierung: GuiComponente.ARDUINOPANEL, GuiComponente.PRINTINGPANEL,
+	 * GuiComponente.TABBEDPANEL
+	 */
 	public void pause() {
 		PaintingMaschine.detectStatistik().countPausePrinting();
 		this.mainFrame.getArduino().setArduinoCommunication("Druckvorgang PAUSE");
@@ -49,6 +70,19 @@ public class PrintingProzess {
 				List.of(GuiComponente.ARDUINOPANEL, GuiComponente.PRINTINGPANEL, GuiComponente.TABBEDPANEL)));
 	}
 
+	/**
+	 * Druckvorgang CANCEL >> cancel()
+	 * <p>
+	 * Alles wird auf Abbrechen gesetzt <br>
+	 * - Arduino Communication <br>
+	 * - PrintingProzess = IDLE <br>
+	 * - Calibrate = UNBESTIMMT <br>
+	 * - Manuel-Button wird aktiviert <br>
+	 * - SerialWirte - MODUS_MANUELL wird gesetzt - Bildmap wird gelöscht
+	 * <p>
+	 * - Gui Aktualisierung: GuiComponente.ARDUINOPANEL,
+	 * GuiComponente.PRINTINGPANEL, GuiComponente.TABBEDPANEL
+	 */
 	public void cancel() {
 		PaintingMaschine.detectStatistik().countCanceldPrinting();
 		this.mainFrame.getArduino().setArduinoCommunication("Druckvorgang ABBRUCH");
@@ -61,7 +95,17 @@ public class PrintingProzess {
 		Helper.guiUpdater(this.mainFrame, new ArrayList<GuiComponente>(
 				List.of(GuiComponente.ARDUINOPANEL, GuiComponente.PRINTINGPANEL, GuiComponente.TABBEDPANEL)));
 	}
-	
+
+	/**
+	 * Druckvorgang START >> start()
+	 * <p>
+	 * Alles wird auf start gesetzt <br>
+	 * - Arduino Communication <br>
+	 * - PrintingProzess = RUN
+	 * <p>
+	 * - Gui Aktualisierung: GuiComponente.ARDUINOPANEL,
+	 * GuiComponente.PRINTINGPANEL, GuiComponente.TABBEDPANEL
+	 */
 	public void start() {
 		this.mainFrame.getArduino().setArduinoCommunication("Druckvorgang START");
 		this.printingProzess = enu.PrintingProzess.RUN;
@@ -70,7 +114,18 @@ public class PrintingProzess {
 		this.mainFrame.datenPool.logger.info("PrintingProzess - Background   //  start() ");
 
 	}
-	
+
+	/**
+	 * Druckvorgang ENDE >> ende()
+	 * <p>
+	 * Alles wird auf Ende gesetzt <br>
+	 * - Arduino Communication <br>
+	 * - PrintingProzess = IDLE <br>
+	 * - Bildmap wird gelöscht<br>
+	 * <p>
+	 * - Gui Aktualisierung: GuiComponente.ARDUINOPANEL,
+	 * GuiComponente.PRINTINGPANEL, GuiComponente.TABBEDPANEL
+	 */
 	public void ende() {
 		PaintingMaschine.detectStatistik().countPrintedPicture();
 		this.mainFrame.getArduino().setArduinoCommunication("Druckvorgang ENDE");

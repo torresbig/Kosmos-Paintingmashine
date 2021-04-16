@@ -47,7 +47,7 @@ public class BackgroundPrintLoop extends SwingWorker<Boolean, Integer> {
 		try {
 			PaintingMaschine.detectStatistik().countStartPrintingProcess();
 			pp.start();
-			for (int x = pp.bildMap.size(); x >= 0 && !pp.printingProzess.isIDLE(); x--) {
+			for (int x = pp.bildMap.size(); x > 0 && !pp.printingProzess.isIDLE(); x--) {
 				String zeichenZeile = "";
 				List<String> list = map.get(x);
 				zeichenZeile = String.join("", list);
@@ -75,7 +75,7 @@ public class BackgroundPrintLoop extends SwingWorker<Boolean, Integer> {
 			pp.mainFrame.datenPool.logger.info("PrintingProzess - Background - ENDE");
 		} catch (Exception e) {
 			e.getStackTrace();
-			pp.mainFrame.datenPool.logger.info("PrintingProzess - Background - GESAMT " + e.toString());
+			pp.mainFrame.datenPool.logger.fine("PrintingProzess - Background - GESAMT - ERROR" + e.toString());
 
 		}
 	}

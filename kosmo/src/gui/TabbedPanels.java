@@ -69,20 +69,20 @@ public class TabbedPanels extends JTabbedPane {
 		btnConnect.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConnect.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConnect.setIcon(new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/arduino_22429_klein.png")));
-		btnConnect.setBounds(10, 11, 196, 85);
+		btnConnect.setBounds(11, 72, 196, 85);
 		panel_Arduino.add(btnConnect);
 
-		lblStatusGrafik.setBounds(110, 111, 50, 50);
+		lblStatusGrafik.setBounds(128, 11, 50, 50);
 		lblStatusGrafik
 				.setIcon(new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/exit_close_error_50x50.png")));
 		panel_Arduino.add(lblStatusGrafik);
 
-		lblStatusArduino.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblStatusArduino.setBounds(24, 124, 55, 25);
+		lblStatusArduino.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblStatusArduino.setBounds(21, 22, 97, 25);
 		panel_Arduino.add(lblStatusArduino);
 
 		panel_Arduino.setLayout(null);
-		listArduinoInfos.setBounds(10, 243, 197, 386);
+		listArduinoInfos.setBounds(10, 179, 197, 450);
 
 		panel_Arduino.add(listArduinoInfos);
 

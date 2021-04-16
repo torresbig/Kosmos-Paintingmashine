@@ -1,3 +1,11 @@
+16.04.2021 - V1.0_Beta
+Fixes:
+- nach dem zusammenfassen von leeren Zeilen wurde
+  in manchen Fällen die nächste Zeile nicht über-
+  tragen. Testes Erfolgreich!
+
+______________________________________________________
+
 24.03.2021 - V0.3_Beta
 Fixes:
 - Problem mit den Leeren-Zeilen gefixt
