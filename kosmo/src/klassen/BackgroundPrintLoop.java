@@ -71,7 +71,8 @@ public class BackgroundPrintLoop extends SwingWorker<Boolean, Integer> {
 			pp.mainFrame.dataPool.logger.info("PrintingProzess - Background - ENDE");
 		} catch (Exception e) {
 			e.getStackTrace();
-			pp.mainFrame.dataPool.logger.info("PrintingProzess - Background - GESAMT " + e.toString());
+			System.out.println("PauseLOOP ENDE - Aktueller Status: " + e);
+			pp.mainFrame.dataPool.logger.fine("PrintingProzess - Background - GESAMT " + e.toString());
 
 		}
 	}
@@ -87,7 +88,7 @@ public class BackgroundPrintLoop extends SwingWorker<Boolean, Integer> {
 				}
 				l++;
 				try {
-					Thread.sleep(100);
+					Thread.sleep(200);
 					System.out.println("PauseLOOP Mittendrin -" + l);
 				} catch (Exception e) {
 					e.getStackTrace();
