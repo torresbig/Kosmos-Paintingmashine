@@ -2,9 +2,7 @@ package test.bildPicture.imageConvert;
 
 import java.io.File;
 import java.io.IOException;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
