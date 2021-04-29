@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Users/thoma/Desktop/KOSMO/Java-Arduino-Communication-Library-4abfab5eebb520ca6b7017ef96b2bb2a27f369a8/jSerialComm-1.3.11.jar"/>
 	<classpathentry kind="output" path="bin"/>

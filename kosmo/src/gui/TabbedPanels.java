@@ -1,8 +1,6 @@
 package gui;
 
 import java.awt.Font;
-import java.awt.Image;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,8 +10,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import enu.Calibrate;
-import enu.SerialIcon;
-import klassen.Helper;
 
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
@@ -46,54 +42,9 @@ public class TabbedPanels extends JTabbedPane {
 		initLblSelectColor();
 		btnStartPrinting.setIcon(new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/paint-spray_47194.png")));
 		btnStartPrinting.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnStartPrinting.setBounds(24, 56, 163, 47);
+		btnStartPrinting.setBounds(24, 27, 163, 47);
 		btnStartPrinting.setEnabled(false);
 		panel_overview.add(btnStartPrinting);
-
-		lblSerialRead.setIcon(
-				new ImageIcon(new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/point_mac_33_grün_blau.png"))
-						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
-		lblSerialRead.setToolTipText("Serial Read");
-		lblSerialRead.setBounds(163, 0, 27, 34);
-		panel_overview.add(lblSerialRead);
-
-		lblSerialWrite.setIcon(
-				new ImageIcon(new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/point_mac_33_rot_dunkel.png"))
-						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
-		lblSerialWrite.setToolTipText("Serial Write");
-		lblSerialWrite.setBounds(187, 0, 27, 34);
-		panel_overview.add(lblSerialWrite);
-	}
-
-	public JLabel lblSerialRead = new JLabel("");
-	public JLabel lblSerialWrite = new JLabel("");
-	private ImageIcon red = new ImageIcon(
-			new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/point_mac_33_rot_dunkel.png")).getImage()
-					.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-	private ImageIcon red_on = new ImageIcon(
-			new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/point_mac_33_rot.png")).getImage()
-					.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-	private ImageIcon gruen = new ImageIcon(
-			new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/point_mac_33_grün.png")).getImage()
-					.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-	private ImageIcon gruen_on = new ImageIcon(
-			new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/point_mac_33_grün_blau.png")).getImage()
-					.getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-
-	public void flashSerialIcon(SerialIcon si) {
-		if (si.isWrite()) {
-			lblSerialWrite.setIcon(red_on);
-	
-		} else {
-			lblSerialRead.setIcon(gruen_on);
-		}
-		try {
-			Helper.guiUpdater(this);
-			Thread.sleep(5);
-		} catch (Exception e) {}
-		lblSerialWrite.setIcon(red);
-		lblSerialRead.setIcon(gruen);
-		Helper.guiUpdater(this);
 	}
 
 	public JPanel panel_Config = new JPanel();
@@ -308,7 +259,8 @@ public class TabbedPanels extends JTabbedPane {
 							new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/paint-spray_47194_pause.png")));
 					btnStartPrinting.setText("  Pause");
 					btnStartPrinting.setEnabled(false);
-				} else {
+				}
+				else {
 					btnStartPrinting.setIcon(
 							new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/paint-spray_47194.png")));
 					btnStartPrinting.setText("  Print");
@@ -394,4 +346,5 @@ public class TabbedPanels extends JTabbedPane {
 			btnCalibrate.setEnabled(false);
 		}
 	}
+
 }

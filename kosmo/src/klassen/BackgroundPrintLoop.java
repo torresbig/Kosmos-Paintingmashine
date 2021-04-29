@@ -3,6 +3,7 @@ package klassen;
 import java.util.List;
 import java.util.Map;
 import javax.swing.SwingWorker;
+
 import enu.GuiComponente;
 import main.PaintingMaschine;
 
@@ -74,7 +75,7 @@ public class BackgroundPrintLoop extends SwingWorker<Boolean, Integer> {
 			pp.mainFrame.datenPool.logger.info("PrintingProzess - Background - ENDE");
 		} catch (Exception e) {
 			e.getStackTrace();
-			pp.mainFrame.datenPool.logger.fine("PrintingProzess - Background - GESAMT " + e.toString());
+			pp.mainFrame.datenPool.logger.fine("PrintingProzess - Background - GESAMT - ERROR" + e.toString());
 
 		}
 	}
@@ -90,7 +91,7 @@ public class BackgroundPrintLoop extends SwingWorker<Boolean, Integer> {
 				}
 				l++;
 				try {
-					Thread.sleep(200);
+					Thread.sleep(100);
 					System.out.println("PauseLOOP Mittendrin -" + l);
 				} catch (Exception e) {
 					e.getStackTrace();

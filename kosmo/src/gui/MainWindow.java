@@ -1,10 +1,6 @@
 package gui;
 
 import javax.swing.JFrame;
-
-import com.fazecast.jSerialComm.SerialPortDataListener;
-import com.fazecast.jSerialComm.SerialPortEvent;
-
 import enu.Calibrate;
 import enu.Commands;
 import enu.GuiComponente;
@@ -30,8 +26,7 @@ import main.Datenpool;
 import java.awt.Dialog.ModalExclusionType;
 import java.awt.Toolkit;
 
-public class MainWindow extends JFrame
-		implements ActionListener, MouseListener, WindowListener {
+public class MainWindow extends JFrame implements ActionListener, MouseListener, WindowListener {
 
 	/**
 	 * 
@@ -47,7 +42,7 @@ public class MainWindow extends JFrame
 
 	public MainWindow(Datenpool dp) {
 		this.datenPool = dp;
-		if (this.getArduino() == null) {
+		if(this.getArduino()== null) {
 			this.datenPool.setArduino(new Arduino(this));
 		}
 		initialize();
@@ -151,8 +146,6 @@ public class MainWindow extends JFrame
 		this.arduinoConf.rdbtnAllesGetrennt.addActionListener(this);
 		this.arduinoConf.rdbtnKomplett.addActionListener(this);
 		this.arduinoConf.rdbtnVorzeichenEineln.addActionListener(this);
-// Serial event listener muss dann hinzugefügt werdeen
-//		this.getArduino().getSerialPort().addDataListener(this);
 		
 		this.arduinoConf.addWindowListener(this);
 	}
@@ -215,6 +208,7 @@ public class MainWindow extends JFrame
 
 		}
 
+
 		/*
 		 * ActionListener für die Bildbearbeitungsbuttons
 		 */
@@ -225,7 +219,8 @@ public class MainWindow extends JFrame
 					initBild(this.getBildDetails().getGreyPicture());
 
 				} else {
-					this.datenPool.setBildDetails(Helper.getLastPicture(this.getBildDetails(), this.picPrintPanel));
+					this.datenPool
+							.setBildDetails(Helper.getLastPicture(this.getBildDetails(), this.picPrintPanel));
 					initBild(this.getBildDetails().getCurrentPicture());
 
 				}
@@ -298,7 +293,7 @@ public class MainWindow extends JFrame
 
 					if (getPrintingProzess().printingProzess.isPAUSE()) {
 						getPrintingProzess().resume();
-
+						
 					} else if (getPrintingProzess().printingProzess.isRUN()) {
 						getPrintingProzess().pause();
 					} else {
@@ -357,20 +352,23 @@ public class MainWindow extends JFrame
 		if (e.getSource() == this.tabbedPanels.tglbtnAuto) {
 			if (this.getArduino().isConnected()) {
 				if (this.tabbedPanels.tglbtnAuto.isSelected()) {
-					if (this.getPrintingProzess() != null) {
-						if (this.getPrintingProzess().printingProzess.isPAUSE()) {
+					if(this.getPrintingProzess() != null) {
+						if(this.getPrintingProzess().printingProzess.isPAUSE()) {
 							getPrintingProzess().resume();
-						} else {
+						}
+						else {
 							this.getArduino().serialWrite(Commands.MODUS_AUTO);
 						}
-					} else {
+					}
+					else {
 						this.getArduino().serialWrite(Commands.MODUS_AUTO);
 					}
-
+					
 				} else {
 					this.getArduino().serialWrite(Commands.MODUS_MANUELL);
 				}
-
+				
+				
 				Helper.guiUpdater(this,
 						new ArrayList<GuiComponente>(List.of(GuiComponente.PRINTINGPANEL, GuiComponente.TABBEDPANEL)));
 			}
@@ -406,7 +404,7 @@ public class MainWindow extends JFrame
 
 		if (e.getSource() == this.conDialog.connectButton) {
 			if (!getArduino().isConnected()) {
-				this.datenPool.setArduino(new Arduino(this, conDialog.portList.getSelectedItem().toString()));
+				this.datenPool.setArduino(new Arduino(this,conDialog.portList.getSelectedItem().toString()));
 				if (this.getArduino().openConnection()) {
 					Helper.guiUpdater(this,
 							new ArrayList<GuiComponente>(List.of(GuiComponente.TABBEDPANEL, GuiComponente.ARDUINOPANEL,
@@ -435,7 +433,7 @@ public class MainWindow extends JFrame
 
 			else {
 				if (Helper.getTheOneComPort() != "false") {
-					this.datenPool.setArduino(new Arduino(this, Helper.getTheOneComPort()));
+					this.datenPool.setArduino(new Arduino(this,Helper.getTheOneComPort()));
 					if (this.getArduino().openConnection()) {
 						Helper.guiUpdater(this,
 								new ArrayList<GuiComponente>(List.of(GuiComponente.TABBEDPANEL,
@@ -496,11 +494,14 @@ public class MainWindow extends JFrame
 			new Kontakt(this).setVisible(true);
 		}
 	}
-
+	
 	/*
 	 * window listener
 	 */
 
+
+	
+	
 	/*
 	 * Mouselistener
 	 */
@@ -513,15 +514,14 @@ public class MainWindow extends JFrame
 			public void run() {
 				if (m.getSource() == tabbedPanels.btnDown) {
 					getArduino().serialWrite(Commands.MOTOREN_RUNTER);
-					if (getArduino().getCalibrateStatus().isCALIBRATED()) {
+					if(getArduino().getCalibrateStatus().isCALIBRATED()) {
 						getArduino().setCalibrateStatus(Calibrate.REFERENZWERT);
 					}
 					while (mousePressed) {
 						try {
 							Thread.sleep(150);
 						} catch (Exception e) {
-							datenPool.logger.info("MainWindow - mousePressed Exception " + e.getMessage()
-									+ "  MouseEvent: " + m.toString());
+							datenPool.logger.info("MainWindow - mousePressed Exception " +e.getMessage() + "  MouseEvent: "+m.toString());
 							e.getStackTrace();
 						}
 					}
@@ -532,58 +532,55 @@ public class MainWindow extends JFrame
 
 				if (m.getSource() == tabbedPanels.btnUp) {
 					getArduino().serialWrite(Commands.MOTOREN_HOCH);
-					if (getArduino().getCalibrateStatus().isCALIBRATED()) {
+					if(getArduino().getCalibrateStatus().isCALIBRATED()) {
 						getArduino().setCalibrateStatus(Calibrate.REFERENZWERT);
 					}
 					while (mousePressed) {
 						try {
 							Thread.sleep(150);
 						} catch (Exception e) {
-							datenPool.logger.info("MainWindow - mousePressed Exception " + e.getMessage()
-									+ "  MouseEvent: " + m.toString());
+							datenPool.logger.info("MainWindow - mousePressed Exception " +e.getMessage() + "  MouseEvent: "+m.toString());
 							e.getStackTrace();
 						}
 					}
 					getArduino().serialWrite(Commands.MOTOREN_STOP);
 					Helper.guiUpdater(tabbedPanels);
 					Helper.guiUpdater(picPrintPanel);
-				}
+					}
 				if (m.getSource() == tabbedPanels.btnLeft) {
 					getArduino().serialWrite(Commands.MOTOREN_LINKS);
-					if (getArduino().getCalibrateStatus().isCALIBRATED()) {
+					if(getArduino().getCalibrateStatus().isCALIBRATED()) {
 						getArduino().setCalibrateStatus(Calibrate.REFERENZWERT);
 					}
 					while (mousePressed) {
 						try {
 							Thread.sleep(150);
 						} catch (Exception e) {
-							datenPool.logger.info("MainWindow - mousePressed Exception " + e.getMessage()
-									+ "  MouseEvent: " + m.toString());
+							datenPool.logger.info("MainWindow - mousePressed Exception " +e.getMessage() + "  MouseEvent: "+m.toString());
 							e.getStackTrace();
 						}
 					}
 					getArduino().serialWrite(Commands.MOTOREN_STOP);
 					Helper.guiUpdater(tabbedPanels);
 					Helper.guiUpdater(picPrintPanel);
-				}
+					}
 				if (m.getSource() == tabbedPanels.btnRight) {
 					getArduino().serialWrite(Commands.MOTOREN_RECHTS);
-					if (getArduino().getCalibrateStatus().isCALIBRATED()) {
+					if(getArduino().getCalibrateStatus().isCALIBRATED()) {
 						getArduino().setCalibrateStatus(Calibrate.REFERENZWERT);
 					}
 					while (mousePressed) {
 						try {
 							Thread.sleep(150);
 						} catch (Exception e) {
-							datenPool.logger.info("MainWindow - mousePressed Exception " + e.getMessage()
-									+ "  MouseEvent: " + m.toString());
+							datenPool.logger.info("MainWindow - mousePressed Exception " +e.getMessage() + "  MouseEvent: "+m.toString());
 							e.getStackTrace();
 						}
 					}
 					getArduino().serialWrite(Commands.MOTOREN_STOP);
 					Helper.guiUpdater(tabbedPanels);
 					Helper.guiUpdater(picPrintPanel);
-				}
+					}
 			}
 		}.start();
 
@@ -614,92 +611,56 @@ public class MainWindow extends JFrame
 	@Override
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void windowClosing(WindowEvent e) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		if (e.getSource() == this.arduinoConf) {
+		if(e.getSource() == this.arduinoConf) {
 			this.getArduino().setEinstellungen(this.arduinoConf.getEinstellungen());
 		}
-
+		
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void windowActivated(WindowEvent e) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 	public Arduino getArduino() {
 		return this.datenPool.getArduino();
 	}
-
+	
 	public PrintingProzess getPrintingProzess() {
 		return this.datenPool.getPrintingProzess();
 	}
-
+	
 	public Bilddetails getBildDetails() {
 		return this.datenPool.getBildDetails();
 	}
-	
-	/**
-	 * 
-	 * Serial event listener muss der mainklasse implementeiert werden
-	 */
-//
-//	@Override
-//	public int getListeningEvents() {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-
-//	@Override
-	
-//	 LISTENING_EVENT_DATA_AVAILABLE	1
-//	 LISTENING_EVENT_DATA_RECEIVED	16
-//	 LISTENING_EVENT_DATA_WRITTEN	256
-//	public void serialEvent(SerialPortEvent arg0) {
-//
-//			if(arg0.getEventType() == SerialPort.LISTENING_EVENT_DATA_AVAILABLE) {
-//				System.out.println("<<<< Datalistener: " +arg0.getEventType());
-//				this.tabbedPanels.flashSerialIcon(SerialIcon.READ);
-//			}
-//			if (arg0.getEventType() == SerialPort.LISTENING_EVENT_DATA_WRITTEN) {
-//				this.tabbedPanels.flashSerialIcon(SerialIcon.WRITE);
-//				System.out.println("<<<< Datalistener: " +arg0.getEventType());
-//			}
-//		}
-//
-//	@Override
-//	public void serialEvent(SerialPortEvent arg0) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-		
-	
 }
