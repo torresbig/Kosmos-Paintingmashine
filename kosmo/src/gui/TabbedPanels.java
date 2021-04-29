@@ -10,6 +10,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import enu.Calibrate;
 import enu.SerialIcon;
 import klassen.Helper;
@@ -117,20 +118,20 @@ public class TabbedPanels extends JTabbedPane {
 		btnConnect.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConnect.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConnect.setIcon(new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/arduino_22429_klein.png")));
-		btnConnect.setBounds(10, 11, 196, 85);
+		btnConnect.setBounds(11, 72, 196, 85);
 		panel_Arduino.add(btnConnect);
 
-		lblStatusGrafik.setBounds(110, 111, 50, 50);
+		lblStatusGrafik.setBounds(128, 11, 50, 50);
 		lblStatusGrafik
 				.setIcon(new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/exit_close_error_50x50.png")));
 		panel_Arduino.add(lblStatusGrafik);
 
-		lblStatusArduino.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblStatusArduino.setBounds(24, 124, 55, 25);
+		lblStatusArduino.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblStatusArduino.setBounds(21, 22, 97, 25);
 		panel_Arduino.add(lblStatusArduino);
 
 		panel_Arduino.setLayout(null);
-		listArduinoInfos.setBounds(10, 243, 197, 386);
+		listArduinoInfos.setBounds(10, 179, 197, 450);
 
 		panel_Arduino.add(listArduinoInfos);
 
@@ -248,15 +249,15 @@ public class TabbedPanels extends JTabbedPane {
 
 	private void refreshLblStatusGrafik() {
 		String grafik = "/gui/grafik/exit_close_error_50x50.png";
-		if (main.dataPool.getArduino() != null) {
-			if (main.dataPool.getArduino().conState.isCONNECTED()) {
+		if (main.datenPool.getArduino() != null) {
+			if (main.datenPool.getArduino().conState.isCONNECTED()) {
 				grafik = "/gui/grafik/ok_accept_50x50.png";
-			} else if (main.dataPool.getArduino().conState.isDISCONNECTEDD()) {
+			} else if (main.datenPool.getArduino().conState.isDISCONNECTEDD()) {
 				grafik = "/gui/grafik/exit_close_error_50x50.png";
 			}
 		} else {
 			System.out.println("Arduino nicht gefunden!");
-			main.dataPool.logger.info("Arduino nicht gefunden! // Methode refreshLblStatusGrafik() ");
+			main.datenPool.logger.info("Arduino nicht gefunden! // Methode refreshLblStatusGrafik() ");
 		}
 
 		lblStatusGrafik.setIcon(new ImageIcon(TabbedPanels.class.getResource(grafik)));
@@ -265,8 +266,8 @@ public class TabbedPanels extends JTabbedPane {
 
 	private void refreshBtnConnect() {
 		String text = "verbinden";
-		if (main.dataPool.getArduino() != null) {
-			if (main.dataPool.getArduino().conState.isCONNECTED()) {
+		if (main.datenPool.getArduino() != null) {
+			if (main.datenPool.getArduino().conState.isCONNECTED()) {
 				text = "trennen";
 			}
 		}
@@ -275,7 +276,7 @@ public class TabbedPanels extends JTabbedPane {
 
 	@SuppressWarnings("unchecked")
 	public void refreshArduinoConnectPanel() {
-		if (main.dataPool.getArduino().isConnected()) {
+		if (main.datenPool.getArduino().isConnected()) {
 			setEnabledAt(1, true);
 		} else {
 			setEnabledAt(1, false);
@@ -283,26 +284,26 @@ public class TabbedPanels extends JTabbedPane {
 		refreshLblStatusGrafik();
 		refreshBtnConnect();
 		refreshMainPanel();
-		if (main.dataPool.getArduino().getArduinoListModel() != null) {
-			listArduinoInfos.setModel(main.dataPool.getArduino().getArduinoListModel());
+		if (main.datenPool.getArduino().getArduinoListModel() != null) {
+			listArduinoInfos.setModel(main.datenPool.getArduino().getArduinoListModel());
 		}
 
 	}
 
 	public void refreshMainPanel() {
 		if (this.tglbtnManuel.isSelected()) {
-			if (main.dataPool.getArduino().isConnected()) {
+			if (main.datenPool.getArduino().isConnected()) {
 				setEnabledAt(1, true);
 			} else {
 				setEnabledAt(1, false);
 			}
-			if (main.dataPool.getPrintingProzess() != null) {
-				if (main.dataPool.getPrintingProzess().printingProzess.isPAUSE()) {
+			if (main.datenPool.getPrintingProzess() != null) {
+				if (main.datenPool.getPrintingProzess().printingProzess.isPAUSE()) {
 					btnStartPrinting.setIcon(
 							new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/paint-spray_47194_resume.png")));
 					btnStartPrinting.setText(" Resume");
 					btnStartPrinting.setEnabled(true);
-				} else if (main.dataPool.getPrintingProzess().printingProzess.isRUN()) {
+				} else if (main.datenPool.getPrintingProzess().printingProzess.isRUN()){
 					btnStartPrinting.setIcon(
 							new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/paint-spray_47194_pause.png")));
 					btnStartPrinting.setText("  Pause");
@@ -323,13 +324,13 @@ public class TabbedPanels extends JTabbedPane {
 			}
 		} else {
 			this.tglbtnAuto.setSelected(true);
-			if (main.dataPool.getPrintingProzess() != null) {
-				if (main.dataPool.getPrintingProzess().printingProzess.isRUN()) {
+			if (main.datenPool.getPrintingProzess() != null) {
+				if (main.datenPool.getPrintingProzess().printingProzess.isRUN()) {
 					btnStartPrinting.setIcon(
 							new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/paint-spray_47194_pause.png")));
 					btnStartPrinting.setText("  Pause");
 					btnStartPrinting.setEnabled(true);
-				} else if (main.dataPool.getPrintingProzess().printingProzess.isPAUSE()) {
+				} else if (main.datenPool.getPrintingProzess().printingProzess.isPAUSE()) {
 					btnStartPrinting.setIcon(
 							new ImageIcon(TabbedPanels.class.getResource("/gui/grafik/paint-spray_47194_resume.png")));
 					btnStartPrinting.setText("  Resume");
@@ -348,7 +349,7 @@ public class TabbedPanels extends JTabbedPane {
 				btnStartPrinting.setText("  Print");
 				btnStartPrinting.setEnabled(true);
 			}
-			if (main.dataPool.getArduino().isConnected()) {
+			if (main.datenPool.getArduino().isConnected()) {
 				setEnabledAt(1, false);
 			} else {
 				setEnabledAt(1, false);
@@ -359,7 +360,7 @@ public class TabbedPanels extends JTabbedPane {
 
 	public void refreshTabbedPanel() {
 		if (this.tglbtnManuel.isSelected()) {
-			if (main.dataPool.getArduino().isConnected()) {
+			if (main.datenPool.getArduino().isConnected()) {
 				this.btnStartPrinting.setEnabled(false);
 				setEnabledAt(1, true);
 			} else {
@@ -368,7 +369,7 @@ public class TabbedPanels extends JTabbedPane {
 			}
 		} else {
 			this.tglbtnAuto.setSelected(true);
-			if (main.dataPool.getArduino().isConnected()) {
+			if (main.datenPool.getArduino().isConnected()) {
 				this.btnStartPrinting.setEnabled(true);
 				setEnabledAt(1, false);
 			} else {
@@ -380,15 +381,15 @@ public class TabbedPanels extends JTabbedPane {
 
 	public void refreshConfig() {
 
-		if (this.main.dataPool.getArduino().getCalibrateStatus() == Calibrate.UNBESTIMMT) {
+		if (this.main.datenPool.getArduino().getCalibrateStatus() == Calibrate.UNBESTIMMT) {
 			btnCalibrate.setText("Referenzwert");
 			btnCalibrate.setEnabled(true);
 		}
-		if (this.main.dataPool.getArduino().getCalibrateStatus() == Calibrate.REFERENZWERT) {
+		if (this.main.datenPool.getArduino().getCalibrateStatus() == Calibrate.REFERENZWERT) {
 			btnCalibrate.setText("Kalibrieren");
 			btnCalibrate.setEnabled(true);
 		}
-		if (this.main.dataPool.getArduino().getCalibrateStatus() == Calibrate.CALIBRATED) {
+		if (this.main.datenPool.getArduino().getCalibrateStatus() == Calibrate.CALIBRATED) {
 			btnCalibrate.setText("Kalibriert");
 			btnCalibrate.setEnabled(false);
 		}

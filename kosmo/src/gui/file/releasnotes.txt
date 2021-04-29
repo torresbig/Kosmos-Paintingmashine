@@ -1,9 +1,20 @@
-22.03.2021 - V0.3_Beta
+16.04.2021 - V1.0_Beta
+Fixes:
+- nach dem zusammenfassen von leeren Zeilen wurde
+  in manchen Fällen die nächste Zeile nicht über-
+  tragen. Testes Erfolgreich!
+
+______________________________________________________
+
+24.03.2021 - V0.3_Beta
 Fixes:
 - Problem mit den Leeren-Zeilen gefixt
 
-New Features:
-- blinkende lämpchen wenn write / read
+New Feature:
+- statiskik Funktionen angelegt und Gui gebaut
+- Eingabeleiste für Arduino-Komando im PrintPanel
+- Start --> Beenden Button jetzt funktionsfähig
+- Überschrift noch die Version eingefügt
 
 ______________________________________________________
 

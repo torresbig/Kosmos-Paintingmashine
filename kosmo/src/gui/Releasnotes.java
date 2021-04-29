@@ -4,6 +4,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JScrollPane;
+
 import main.Datenpool;
 import main.PaintingMaschine;
 import java.awt.Toolkit;
@@ -23,7 +24,8 @@ public class Releasnotes extends JDialog {
 	private static final long serialVersionUID = 1L;
 	
 	
-	private final String datum = "22.03.2021";
+
+	private final String datum = "16.04.2021";
 	private Datenpool dp;
 	
 	
