@@ -2,9 +2,7 @@ package test.bildPicture.imageConvert;
 
 import java.io.File;
 import java.io.IOException;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -36,7 +34,7 @@ public class ImageToGrey {
 		BufferedImage img = null;
 		File f = null;
 		try {
-			f = new File("smal2.jpg");
+			f = new File("/kosmo/src/test/bildPicture/smal2.jpg");
 			img = ImageIO.read(f);
 		} catch (IOException e) {
 			System.out.println(e);
