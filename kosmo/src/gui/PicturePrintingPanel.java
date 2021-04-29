@@ -15,7 +15,6 @@ import klassen.ImagePanel;
 import javax.swing.JList;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
-
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;

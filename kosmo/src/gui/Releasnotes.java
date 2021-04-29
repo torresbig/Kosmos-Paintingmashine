@@ -7,7 +7,6 @@ import javax.swing.JScrollPane;
 
 import main.Datenpool;
 import main.PaintingMaschine;
-
 import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,6 +24,7 @@ public class Releasnotes extends JDialog {
 	private static final long serialVersionUID = 1L;
 	
 	
+
 	private final String datum = "16.04.2021";
 	private Datenpool dp;
 	

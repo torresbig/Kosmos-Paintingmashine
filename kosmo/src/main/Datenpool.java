@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
-
 import javax.swing.DefaultListModel;
 import klassen.Bilddetails;
 import klassen.PrintingProzess;

@@ -3,6 +3,7 @@ package klassen;
 import java.io.File;
 import java.io.Serializable;
 
+
 import klassen.arduino.Arduino;
 
 public class SaveData implements Serializable{
