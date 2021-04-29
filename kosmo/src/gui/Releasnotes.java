@@ -25,7 +25,7 @@ public class Releasnotes extends JDialog {
 	
 	
 
-	private final String datum = "16.04.2021";
+	private final String datum = "29.04.2021";
 	private Datenpool dp;
 	
 	
