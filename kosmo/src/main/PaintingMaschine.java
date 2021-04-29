@@ -18,7 +18,7 @@ public class PaintingMaschine implements ActionListener {
 
 	private static Datenpool dp;
 	private static Statistik statistik;
-	private final static String version = "v1.0_BETA";
+	private final static String version = "v1.0_TESTVERSION";
 	private final static String pfad = ShellFolder.get("fileChooserDefaultFolder") + File.separator
 			+ "PaintingMaschine";
 	private final static String dateiName = "paintingData.dat";
