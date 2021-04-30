@@ -34,7 +34,7 @@ public class ImageToGrey {
 		BufferedImage img = null;
 		File f = null;
 		try {
-			f = new File("/kosmo/src/test/bildPicture/smal2.jpg");
+			f = new File("./src/test/bildPicture/smal2.jpg");
 			img = ImageIO.read(f);
 		} catch (IOException e) {
 			System.out.println(e);
@@ -78,7 +78,7 @@ public class ImageToGrey {
 
 	public static void createAndSave(BufferedImage image) throws Exception {
 
-		File outputfile = new File("out.png");
+		File outputfile = new File("./src/test/bildPicture/out.png");
 		ImageIO.write(image, "png", outputfile);
 		System.out.println("wo speicherst du arsch? " + outputfile.toString());
 	}

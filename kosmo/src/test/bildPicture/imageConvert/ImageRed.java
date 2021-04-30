@@ -24,7 +24,7 @@ public class ImageRed {
 		BufferedImage img = null;
 		File f = null;
 		try {
-			f = new File("/test/bildPicture/test_2.bmp");
+			f = new File("./src/test/bildPicture/test_2.bmp");
 			img = ImageIO.read(f);
 		} catch (IOException e) {
 			System.out.println(e);
@@ -41,7 +41,7 @@ public class ImageRed {
 			}
 		}
 		try {
-			f = new File("/test/bildPicture/outRgb.jpg");
+			f = new File("./src/test/bildPicture/outRgb.jpg");
 			ImageIO.write(img, "jpg", f);
 			ImageToGrey.showResult(img);
 		} catch (IOException e) {

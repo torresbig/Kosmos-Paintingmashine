@@ -6,6 +6,9 @@ import java.awt.image.DataBufferInt;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class ImageArrayImage {
 	
@@ -175,33 +178,33 @@ public class ImageArrayImage {
 		return rgbArray;
 	}
 	
-//	public static void main(String... args) throws Exception {
-//		
-//		getArrayFromImage("test_2.bmp");
-//		
-//		getRGBArray(dataBuffInt);
-//	    
-//		
-//		//Show result on screen
-//	    JFrame jf = new JFrame();
-//	    JLabel jl = new JLabel();
-//	    
-//	    ImageIcon ii = new ImageIcon(getImageFromArray(rgbArray, w, h));
-//	    jl.setIcon(ii);
-//	    jf.add(jl);
-//	    jf.pack();
-//	    jf.setVisible(true);
-//	    
-//	    
-//	    createAndSaveImageInFile(dataBuffInt, "result.png");
-//	    
-//	    
-//	    System.out.println("Test: ");
-//	    System.out.println("getRegion(0,0): " + getRegion(0,0));
-//	    System.out.println("getRegion(100,100): " + getRegion(100,100));
-//	    System.out.println("getRegion(50,100): " + getRegion(50,100));
-//	    System.out.println("getRegion(200,200): " + getRegion(200,200));
-//	    System.out.println("getRegion(140,100): " + getRegion(140,100));
-//	    System.out.println("getRegion(200,100): " + getRegion(200,100));
-//	}	
+	public static void main(String... args) throws Exception {
+		
+		getArrayFromImage("./src/test/bildPicture/test_2.bmp");
+		
+		getRGBArray(dataBuffInt);
+	    
+		
+		//Show result on screen
+	    JFrame jf = new JFrame();
+	    JLabel jl = new JLabel();
+	    
+	    ImageIcon ii = new ImageIcon(getImageFromArray(rgbArray, w, h));
+	    jl.setIcon(ii);
+	    jf.add(jl);
+	    jf.pack();
+	    jf.setVisible(true);
+	    
+	    
+	    createAndSaveImageInFile(dataBuffInt, "./src/test/bildPicture/result.png");
+	    
+	    
+	    System.out.println("Test: ");
+	    System.out.println("getRegion(0,0): " + getRegion(0,0));
+	    System.out.println("getRegion(100,100): " + getRegion(100,100));
+	    System.out.println("getRegion(50,100): " + getRegion(50,100));
+	    System.out.println("getRegion(200,200): " + getRegion(200,200));
+	    System.out.println("getRegion(140,100): " + getRegion(140,100));
+	    System.out.println("getRegion(200,100): " + getRegion(200,100));
+	}	
 }
